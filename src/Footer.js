@@ -4,7 +4,7 @@ import {Navbar} from "react-bootstrap";
 function Footer() {
   return (
     <Navbar bg="dark" variant="dark" sticky="bottom">
-      PomidoroX @ 2020
+      PomidoroX &copy; 2020
     </Navbar>
   )
 }
