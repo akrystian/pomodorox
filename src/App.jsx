@@ -8,7 +8,7 @@ import Main from "./Main";
 function App() {
   return (
     <div className="App">
-      <Header/>
+      <Header name={'PomodoroX'}/>
       <Main/>
       <Footer/>
     </div>
