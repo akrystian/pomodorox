@@ -6,7 +6,7 @@ function Blank() {
     return (
         <Card className="m-2">
             <Card.Body>
-                Choose period!
+                Choose period.
             </Card.Body>
         </Card>
     )
