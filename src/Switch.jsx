@@ -17,6 +17,10 @@ export const Switch = ({show}) => {
             return <Blank />
         }
     }
+
+    return (
+            selectedElement(show)
+        )
 }
 
 export default Switch;
