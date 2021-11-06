@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Button, FormControl, InputGroup } from "react-bootstrap"
+import React, { useState } from 'react'
+import { Button, FormControl, InputGroup } from 'react-bootstrap'
 
 function Aim() {
     const states = ['todo', 'working', 'done']
@@ -7,7 +7,7 @@ function Aim() {
     const [isTodo, setTodo] = useState(0)
 
     const handleClick = () => {
-        setTodo((isTodo + 1) % states.length);
+        setTodo((isTodo + 1) % states.length)
     }
 
     return (
@@ -23,12 +23,13 @@ function Aim() {
                         type="checkbox"
                         onClick={() => handleClick()}
                         variant={colors[isTodo]}
-                    >{states[isTodo]}</Button>
+                    >
+                        {states[isTodo]}
+                    </Button>
                 </InputGroup.Append>
             </InputGroup>
         </div>
-    );
-
+    )
 }
 
-export default Aim;
+export default Aim

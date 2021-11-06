@@ -1,13 +1,13 @@
-import React from "react"
-import {LONG_BREAK, REGULAR, SHORT_BREAK} from "./Const"
-import Blank from "./timers/Blank";
-import LongBreak from './timers/LongBreak';
-import Regular from "./timers/Regular";
-import ShortBreak from "./timers/ShortBreak";
+import React from 'react'
+import { LONG_BREAK, REGULAR, SHORT_BREAK } from './Const'
+import Blank from './timers/Blank'
+import LongBreak from './timers/LongBreak'
+import Regular from './timers/Regular'
+import ShortBreak from './timers/ShortBreak'
 
-export const Switch = ({show}) => {
+export const Switch = ({ show }) => {
     const selectedElement = (componentName) => {
-        if(componentName === LONG_BREAK) {
+        if (componentName === LONG_BREAK) {
             return <LongBreak />
         } else if (componentName === SHORT_BREAK) {
             return <ShortBreak />
@@ -18,9 +18,7 @@ export const Switch = ({show}) => {
         }
     }
 
-    return (
-            selectedElement(show)
-        )
+    return selectedElement(show)
 }
 
-export default Switch;
+export default Switch
