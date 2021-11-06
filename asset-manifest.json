@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/pomodorox/static/css/main.435d5fe5.chunk.css",
-    "main.js": "/pomodorox/static/js/main.d52a7050.chunk.js",
-    "main.js.map": "/pomodorox/static/js/main.d52a7050.chunk.js.map",
+    "main.js": "/pomodorox/static/js/main.0de0d04f.chunk.js",
+    "main.js.map": "/pomodorox/static/js/main.0de0d04f.chunk.js.map",
     "runtime-main.js": "/pomodorox/static/js/runtime-main.d542cae2.js",
     "runtime-main.js.map": "/pomodorox/static/js/runtime-main.d542cae2.js.map",
     "static/css/2.429e79c4.chunk.css": "/pomodorox/static/css/2.429e79c4.chunk.css",
-    "static/js/2.245a287b.chunk.js": "/pomodorox/static/js/2.245a287b.chunk.js",
-    "static/js/2.245a287b.chunk.js.map": "/pomodorox/static/js/2.245a287b.chunk.js.map",
+    "static/js/2.da5b54fc.chunk.js": "/pomodorox/static/js/2.da5b54fc.chunk.js",
+    "static/js/2.da5b54fc.chunk.js.map": "/pomodorox/static/js/2.da5b54fc.chunk.js.map",
     "index.html": "/pomodorox/index.html",
-    "precache-manifest.3e9cd972e4194fd7c8530ca9b7372799.js": "/pomodorox/precache-manifest.3e9cd972e4194fd7c8530ca9b7372799.js",
+    "precache-manifest.46b10aef0282eb403c2ad4c64ee218e5.js": "/pomodorox/precache-manifest.46b10aef0282eb403c2ad4c64ee218e5.js",
     "service-worker.js": "/pomodorox/service-worker.js",
     "static/css/2.429e79c4.chunk.css.map": "/pomodorox/static/css/2.429e79c4.chunk.css.map",
     "static/css/main.435d5fe5.chunk.css.map": "/pomodorox/static/css/main.435d5fe5.chunk.css.map",
-    "static/js/2.245a287b.chunk.js.LICENSE.txt": "/pomodorox/static/js/2.245a287b.chunk.js.LICENSE.txt"
+    "static/js/2.da5b54fc.chunk.js.LICENSE.txt": "/pomodorox/static/js/2.da5b54fc.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.d542cae2.js",
     "static/css/2.429e79c4.chunk.css",
-    "static/js/2.245a287b.chunk.js",
+    "static/js/2.da5b54fc.chunk.js",
     "static/css/main.435d5fe5.chunk.css",
-    "static/js/main.d52a7050.chunk.js"
+    "static/js/main.0de0d04f.chunk.js"
   ]
 }
