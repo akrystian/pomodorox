@@ -1,10 +1,8 @@
-import React from "react"
-
+import React from 'react'
+import { Timer } from './counter/Timer'
 
 function Regular() {
-    return (
-        <div>Regular component todo</div>
-    )
+    return <Timer period={{ minutes: 25, seconds: 0 }} />
 }
 
-export default Regular;
+export default Regular

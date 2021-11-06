@@ -1,10 +1,8 @@
-import React from "react"
-
+import React from 'react'
+import Timer from './counter/Timer'
 
 function LongBreak() {
-    return (
-        <div>LongBreak component todo</div>
-    )
+    return <Timer period={{ minutes: 10, seconds: 0 }} />
 }
 
-export default LongBreak;
+export default LongBreak

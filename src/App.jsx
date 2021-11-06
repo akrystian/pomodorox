@@ -1,18 +1,18 @@
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
-import Header from "./Header";
-import Footer from "./Footer";
-import Main from "./Main";
+import React from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import './App.css'
+import Header from './Header'
+import Footer from './Footer'
+import Main from './Main'
 
 function App() {
-  return (
-    <div className="App">
-      <Header name={'PomodoroX'}/>
-      <Main/>
-      <Footer/>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Header name={'PomodoroX'} />
+            <Main />
+            <Footer />
+        </div>
+    )
 }
 
-export default App;
+export default App

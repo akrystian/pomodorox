@@ -1,10 +1,8 @@
-import React from "react"
-
+import React from 'react'
+import { Timer } from './counter/Timer'
 
 function ShortBreak() {
-    return (
-        <div>ShortBreak component todo</div>
-    )
+    return <Timer period={{ minutes: 0, seconds: 2 }} />
 }
 
-export default ShortBreak;
+export default ShortBreak
