@@ -25,7 +25,6 @@ function Aim() {
                         variant={colors[isTodo]}
                     >{states[isTodo]}</Button>
                 </InputGroup.Append>
-
             </InputGroup>
         </div>
     );
