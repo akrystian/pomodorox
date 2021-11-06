@@ -31,3 +31,5 @@ function Aim() {
     );
 
 }
+
+export default Aim;
