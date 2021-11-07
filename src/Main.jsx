@@ -33,12 +33,13 @@ class Main extends React.Component {
                     <Col>{tasks}</Col>
                 </Row>
                 <Row>
-                    <Col xs={{ span: 1, offset: 11 }}>
+                    <Col>
                         <Button
-                            className="pull-right"
+                            className="float-right"
+                            variant="secondary"
                             onClick={() => this.addTask()}
                         >
-                            add task
+                            +
                         </Button>
                     </Col>
                 </Row>
