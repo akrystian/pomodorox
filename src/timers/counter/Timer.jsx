@@ -29,8 +29,9 @@ export const Timer = ({ period }) => {
                 }
             }
         } else {
-            result = remaining
-            new Audio('./countdown-sound.mp3')
+            result = remaining;
+            const sound = new Audio('https://actions.google.com/sounds/v1/household/clock_ticking.ogg');
+            sound.play()
         }
 
         return result
