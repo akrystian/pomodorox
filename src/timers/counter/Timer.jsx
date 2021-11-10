@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Counter } from './Counter'
 import { useState } from 'react'
 
-export const Timer = ({ period }) => {
+export const Timer = ({ period, showNotifications }) => {
     const remainingTime = (initial, remaining) => {
         let result
 
@@ -29,12 +29,19 @@ export const Timer = ({ period }) => {
                 }
             }
         } else {
-            result = remaining;
-            const sound = new Audio('https://actions.google.com/sounds/v1/household/clock_ticking.ogg');
-            sound.play()
+            result = remaining
+            timeUpHook()
         }
 
         return result
+    }
+
+    const timeUpHook = () => {
+        const sound = new Audio(
+            'https://actions.google.com/sounds/v1/alarms/radiation_meter.ogg'
+        )
+        sound.play()
+        showNotifications.showNotifications()
     }
 
     const plus = (minutes, seconds = 0) => {

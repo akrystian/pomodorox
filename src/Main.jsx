@@ -9,6 +9,7 @@ import {
 import { LONG_BREAK, REGULAR, SHORT_BREAK, TEST_BREAK } from './Const'
 import Aim from './Aim'
 import { Switch } from './Switch'
+import ReactNotifications from 'react-browser-notifications'
 
 class Main extends React.Component {
     state = {
@@ -19,6 +20,16 @@ class Main extends React.Component {
     handleChange = (val) => this.setState({ value: val })
 
     addTask = () => this.setState({ numTask: this.state.numTask + 1 })
+
+    showNotifications = () => {
+        if (ReactNotifications.n.supported()) {
+            ReactNotifications.n.show()
+        }
+    }
+
+    handleNotificationClick = (event) => {
+        ReactNotifications.n.close(event.target.tag)
+    }
 
     render() {
         const tasks = []
@@ -67,7 +78,20 @@ class Main extends React.Component {
                 </Row>
                 <Row>
                     <Col>
-                        <Switch show={this.state.value} />
+                        <Switch
+                            show={this.state.value}
+                            showNotifications={() => this.showNotifications()}
+                        />
+                        <ReactNotifications
+                            onRef={(ref) => (ReactNotifications.n = ref)}
+                            title="Yep!" // Required
+                            body="Time is up!"
+                            icon="icon.png"
+                            timeout="5000"
+                            onClick={(event) =>
+                                this.handleNotificationClick(event)
+                            }
+                        />
                     </Col>
                 </Row>
             </div>
