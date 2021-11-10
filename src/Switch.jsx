@@ -4,20 +4,20 @@ import Blank from './timers/Blank'
 import LongBreak from './timers/LongBreak'
 import Regular from './timers/Regular'
 import ShortBreak from './timers/ShortBreak'
-import TestBreak from './timers/TestBreak';
+import TestBreak from './timers/TestBreak'
 
-export const Switch = ({ show }) => {
+export const Switch = ({ show, showNotifications }) => {
     const selectedElement = (componentName) => {
         if (componentName === LONG_BREAK) {
-            return <LongBreak />
+            return <LongBreak showNotifications={showNotifications} />
         } else if (componentName === SHORT_BREAK) {
-            return <ShortBreak />
+            return <ShortBreak showNotifications={showNotifications} />
         } else if (componentName === REGULAR) {
-            return <Regular />
+            return <Regular showNotifications={showNotifications} />
         } else if (componentName === TEST_BREAK) {
-            return <TestBreak />
+            return <TestBreak showNotifications={showNotifications} />
         } else {
-            return <Blank />
+            return <Blank showNotifications={showNotifications} />
         }
     }
 
