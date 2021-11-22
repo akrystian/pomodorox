@@ -1,12 +1,9 @@
 import React from 'react'
-import { Timer } from './counter/Timer'
+import { NewTimer } from './counter/NewTimer'
 
 function ShortBreak(showNotifications) {
     return (
-        <Timer
-            period={{ minutes: 5, seconds: 0 }}
-            showNotifications={showNotifications}
-        />
+        <NewTimer timerSeconds={5 * 60} showNotifications={showNotifications} />
     )
 }
 

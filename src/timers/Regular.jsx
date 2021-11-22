@@ -1,10 +1,10 @@
 import React from 'react'
-import { Timer } from './counter/Timer'
+import { NewTimer } from './counter/NewTimer'
 
 function Regular(showNotifications) {
     return (
-        <Timer
-            period={{ minutes: 25, seconds: 0 }}
+        <NewTimer
+            timerSeconds={25 * 60}
             showNotifications={showNotifications}
         />
     )

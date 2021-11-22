@@ -1,10 +1,10 @@
 import React from 'react'
-import Timer from './counter/Timer'
+import { NewTimer } from './counter/NewTimer'
 
 function LongBreak(showNotifications) {
     return (
-        <Timer
-            period={{ minutes: 10, seconds: 0 }}
+        <NewTimer
+            timerSeconds={10 * 60}
             showNotifications={showNotifications}
         />
     )

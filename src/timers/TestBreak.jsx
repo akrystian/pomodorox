@@ -1,13 +1,8 @@
 import React from 'react'
-import Timer from './counter/Timer'
+import { NewTimer } from './counter/NewTimer'
 
 function TestBreak(showNotifications) {
-    return (
-        <Timer
-            period={{ minutes: 0, seconds: 5 }}
-            showNotifications={showNotifications}
-        />
-    )
+    return <NewTimer timerSeconds={5} showNotifications={showNotifications} />
 }
 
 export default TestBreak
