@@ -5,17 +5,35 @@ import { useTimer } from 'react-timer-hook'
 import { FaRedo, FaPause, FaPlay } from 'react-icons/fa'
 
 export const NewTimer = ({ timerSeconds, showNotifications }) => {
+    const reminderSeconds = 300
     const calculateTime = (secondsOffset) => {
         const time = new Date()
         time.setSeconds(time.getSeconds() + secondsOffset)
         return time
     }
 
-    const { seconds, minutes, start, pause, restart } =
-        useTimer({
-            expiryTimestamp: calculateTime(timerSeconds),
-            onExpire: () => timeUpHook(),
-        })
+    const { seconds, minutes, start, pause, restart } = useTimer({
+        expiryTimestamp: calculateTime(timerSeconds),
+        onExpire: () => timeUpHook(),
+    })
+
+    const reminderTimer = useTimer({
+        expiryTimestamp: calculateTime(reminderSeconds),
+        onExpire: () => reminderTimeUpHook(reminderTimer2),
+        autoStart: false,
+    })
+
+    const reminderTimer2 = useTimer({
+        expiryTimestamp: calculateTime(reminderSeconds),
+        onExpire: () => reminderTimeUpHook(reminderTimer),
+        autoStart: false,
+    })
+
+    const reminderTimeUpHook = (timer) => {
+        console.log('reminderTimeUpHook')
+        showNotifications.showNotifications()
+        timer.restart(calculateTime(reminderSeconds))
+    }
 
     const timeUpHook = () => {
         const sound = new Audio(
@@ -23,6 +41,7 @@ export const NewTimer = ({ timerSeconds, showNotifications }) => {
         )
         sound.play()
         showNotifications.showNotifications()
+        reminderTimer.start()
     }
 
     const twoSign = (count) => {
@@ -53,7 +72,9 @@ export const NewTimer = ({ timerSeconds, showNotifications }) => {
                             <Button
                                 onClick={() => {
                                     const time = new Date()
-                                    time.setSeconds(time.getSeconds() + 300)
+                                    time.setSeconds(
+                                        time.getSeconds() + timerSeconds
+                                    )
                                     restart(time)
                                 }}
                             >
