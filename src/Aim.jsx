@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Button, FormControl, InputGroup } from 'react-bootstrap'
+import { Button, Card } from 'react-bootstrap'
 
-function Aim() {
+export const Aim = (label) => {
     const states = ['todo', 'working', 'done']
     const colors = ['secondary', 'primary', 'success']
     const [isTodo, setTodo] = useState(0)
@@ -11,24 +11,18 @@ function Aim() {
     }
 
     return (
-        <div>
-            <InputGroup className="mb-3">
-                <FormControl
-                    placeholder="Task"
-                    aria-label="Task"
-                    aria-describedby="basic-addon2"
-                />
-                <InputGroup.Append>
-                    <Button
-                        type="checkbox"
-                        onClick={() => handleClick()}
-                        variant={colors[isTodo]}
-                    >
-                        {states[isTodo]}
-                    </Button>
-                </InputGroup.Append>
-            </InputGroup>
-        </div>
+        <Card className="m-2">
+            <Card.Body>
+                {label}
+                <Button
+                    type="checkbox"
+                    onClick={() => handleClick()}
+                    variant={colors[isTodo]}
+                >
+                    {states[isTodo]}
+                </Button>
+            </Card.Body>
+        </Card>
     )
 }
 

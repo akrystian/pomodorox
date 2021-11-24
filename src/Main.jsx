@@ -5,6 +5,8 @@ import {
     ToggleButton,
     ToggleButtonGroup,
     Button,
+    FormControl,
+    InputGroup,
 } from 'react-bootstrap'
 import { LONG_BREAK, REGULAR, SHORT_BREAK, TEST_BREAK } from './Const'
 import Aim from './Aim'
@@ -13,13 +15,39 @@ import ReactNotifications from 'react-browser-notifications'
 
 class Main extends React.Component {
     state = {
-        value: [],
+        labels: [],
+        mode: [],
         numTask: 1,
+        label: '',
     }
 
-    handleChange = (val) => this.setState({ value: val })
+    componentDidMount() {
+        var s = localStorage.getItem('state')
+        if (s != null) {
+            this.setState(JSON.parse(s))
+        }
+    }
 
-    addTask = () => this.setState({ numTask: this.state.numTask + 1 })
+    handleChange = (labels) => {
+        this.setState({ labels: labels })
+        localStorage.setItem('state', JSON.stringify(this.state))
+    }
+
+    handleChangeMode = (mode) => {
+        this.setState({ mode: mode })
+        localStorage.setItem('state', JSON.stringify(this.state))
+    }
+
+    handleChangeLabel = (label) => {
+        this.setState({ label: label })
+    }
+
+    addTask = (label) => {
+        if (label != null) {
+            this.setState({ labels: this.labels.concat([label]) })
+            localStorage.setItem('state', JSON.stringify(this.state))
+        }
+    }
 
     showNotifications = () => {
         if (ReactNotifications.n.supported()) {
@@ -34,9 +62,7 @@ class Main extends React.Component {
     render() {
         const tasks = []
 
-        for (let index = 0; index < this.state.numTask; index++) {
-            tasks.push(<Aim />)
-        }
+        this.state.labels.forEach((it) => tasks.push(<Aim label={it} />))
 
         return (
             <div className="m-2">
@@ -45,13 +71,23 @@ class Main extends React.Component {
                 </Row>
                 <Row>
                     <Col>
-                        <Button
-                            className="float-right"
-                            variant="secondary"
-                            onClick={() => this.addTask()}
-                        >
-                            +
-                        </Button>
+                        <InputGroup className="mb-3">
+                            <FormControl
+                                value={this.label}
+                                aria-label={this.label}
+                                aria-describedby="basic-addon2"
+                                onChange={(e) =>
+                                    this.handleChangeLabel(e.target.value)
+                                }
+                            />
+                            <InputGroup.Append>
+                                <Button
+                                    onClick={() => this.addTask(this.label)}
+                                >
+                                    +
+                                </Button>
+                            </InputGroup.Append>
+                        </InputGroup>
                     </Col>
                 </Row>
                 <Row>
@@ -60,8 +96,10 @@ class Main extends React.Component {
                             className="flex-wrap"
                             type="radio"
                             name="options"
-                            value={this.state.value}
-                            onChange={this.handleChange}
+                            value={this.state.mode}
+                            onChange={() =>
+                                this.handleChangeMode(this.state.mode)
+                            }
                         >
                             <ToggleButton value={REGULAR}>Regular</ToggleButton>
                             <ToggleButton value={SHORT_BREAK}>
@@ -79,7 +117,7 @@ class Main extends React.Component {
                 <Row>
                     <Col>
                         <Switch
-                            show={this.state.value}
+                            show={this.state.labels}
                             showNotifications={() => this.showNotifications()}
                         />
                         <ReactNotifications
