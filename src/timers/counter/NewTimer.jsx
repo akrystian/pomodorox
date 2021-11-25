@@ -17,6 +17,34 @@ export const NewTimer = ({ timerSeconds, showNotifications }) => {
             onExpire: () => timeUpHook(),
         })
 
+    const reminderTimer = useTimer({
+        expiryTimestamp: calculateTime(reminderSeconds),
+        onExpire: () => reminderTimeUpHook(reminderTimer2),
+        autoStart: false,
+    })
+
+    const reminderTimer2 = useTimer({
+        expiryTimestamp: calculateTime(reminderSeconds),
+        onExpire: () => reminderTimeUpHook(reminderTimer),
+        autoStart: false,
+    })
+
+    const pauseAll = () => {
+        pause()
+        reminderTimer.pause()
+        reminderTimer2.pause()
+    }
+
+    const reminderTimeUpHook = (timer) => {
+        console.log('reminderTimeUpHook')
+        showNotifications.showNotifications()
+        const sound = new Audio(
+            'https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg'
+        )
+        sound.play()
+        timer.restart(calculateTime(reminderSeconds))
+    }
+
     const timeUpHook = () => {
         const sound = new Audio(
             'https://actions.google.com/sounds/v1/alarms/radiation_meter.ogg'
@@ -48,6 +76,9 @@ export const NewTimer = ({ timerSeconds, showNotifications }) => {
                                 <FaPlay />
                             </Button>
                             <Button onClick={pause}>
+                                <FaPause />
+                            </Button>
+                            <Button variant='success' onClick={pauseAll}>
                                 <FaPause />
                             </Button>
                             <Button

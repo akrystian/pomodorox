@@ -84,8 +84,8 @@ class Main extends React.Component {
                         />
                         <ReactNotifications
                             onRef={(ref) => (ReactNotifications.n = ref)}
-                            title="Yep!" // Required
                             body="Time is up!"
+                            title="Yep!" // Required
                             icon="icon.png"
                             timeout="5000"
                             onClick={(event) =>
