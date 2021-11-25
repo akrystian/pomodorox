@@ -5,17 +5,18 @@ import { useTimer } from 'react-timer-hook'
 import { FaRedo, FaPause, FaPlay } from 'react-icons/fa'
 
 export const NewTimer = ({ timerSeconds, showNotifications }) => {
+    const reminderSeconds = 300
+
     const calculateTime = (secondsOffset) => {
         const time = new Date()
         time.setSeconds(time.getSeconds() + secondsOffset)
         return time
     }
 
-    const { seconds, minutes, start, pause, restart } =
-        useTimer({
-            expiryTimestamp: calculateTime(timerSeconds),
-            onExpire: () => timeUpHook(),
-        })
+    const { seconds, minutes, start, pause, restart } = useTimer({
+        expiryTimestamp: calculateTime(timerSeconds),
+        onExpire: () => timeUpHook(),
+    })
 
     const reminderTimer = useTimer({
         expiryTimestamp: calculateTime(reminderSeconds),
@@ -78,7 +79,7 @@ export const NewTimer = ({ timerSeconds, showNotifications }) => {
                             <Button onClick={pause}>
                                 <FaPause />
                             </Button>
-                            <Button variant='success' onClick={pauseAll}>
+                            <Button variant="success" onClick={pauseAll}>
                                 <FaPause />
                             </Button>
                             <Button
