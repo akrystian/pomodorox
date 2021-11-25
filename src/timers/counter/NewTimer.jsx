@@ -6,6 +6,7 @@ import { FaRedo, FaPause, FaPlay } from 'react-icons/fa'
 
 export const NewTimer = ({ timerSeconds, showNotifications }) => {
     const reminderSeconds = 300
+
     const calculateTime = (secondsOffset) => {
         const time = new Date()
         time.setSeconds(time.getSeconds() + secondsOffset)
@@ -29,9 +30,19 @@ export const NewTimer = ({ timerSeconds, showNotifications }) => {
         autoStart: false,
     })
 
+    const pauseAll = () => {
+        pause()
+        reminderTimer.pause()
+        reminderTimer2.pause()
+    }
+
     const reminderTimeUpHook = (timer) => {
         console.log('reminderTimeUpHook')
         showNotifications.showNotifications()
+        const sound = new Audio(
+            'https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg'
+        )
+        sound.play()
         timer.restart(calculateTime(reminderSeconds))
     }
 
@@ -41,7 +52,6 @@ export const NewTimer = ({ timerSeconds, showNotifications }) => {
         )
         sound.play()
         showNotifications.showNotifications()
-        reminderTimer.start()
     }
 
     const twoSign = (count) => {
@@ -69,12 +79,13 @@ export const NewTimer = ({ timerSeconds, showNotifications }) => {
                             <Button onClick={pause}>
                                 <FaPause />
                             </Button>
+                            <Button variant="success" onClick={pauseAll}>
+                                <FaPause />
+                            </Button>
                             <Button
                                 onClick={() => {
                                     const time = new Date()
-                                    time.setSeconds(
-                                        time.getSeconds() + timerSeconds
-                                    )
+                                    time.setSeconds(time.getSeconds() + 300)
                                     restart(time)
                                 }}
                             >
