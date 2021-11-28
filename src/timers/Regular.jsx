@@ -6,6 +6,7 @@ function Regular(showNotifications) {
         <NewTimer
             timerSeconds={25 * 60}
             showNotifications={showNotifications}
+            reminderSeconds={5 * 60}
         />
     )
 }

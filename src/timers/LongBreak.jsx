@@ -6,6 +6,7 @@ function LongBreak(showNotifications) {
         <NewTimer
             timerSeconds={10 * 60}
             showNotifications={showNotifications}
+            reminderSeconds={5 * 60}
         />
     )
 }
