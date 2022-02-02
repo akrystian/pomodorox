@@ -23,18 +23,18 @@ export const NewTimer = ({
 
     const { seconds, minutes, start, pause, restart } = useTimer({
         expiryTimestamp: calculateTime(timerSeconds),
-        onExpire: () => timeUpHook(reminderTimer, regularSound),
+        onExpire: () => timeUpHook(reminderTimer, regularSound, false),
     })
 
     const reminderTimer = useTimer({
         expiryTimestamp: calculateTime(reminderSeconds),
-        onExpire: () => timeUpHook(reminderTimer2, reminderSound),
+        onExpire: () => timeUpHook(reminderTimer2, reminderSound, true),
         autoStart: false,
     })
 
     const reminderTimer2 = useTimer({
         expiryTimestamp: calculateTime(reminderSeconds),
-        onExpire: () => timeUpHook(reminderTimer, reminderSound),
+        onExpire: () => timeUpHook(reminderTimer, reminderSound, true),
         autoStart: false,
     })
 
@@ -44,11 +44,11 @@ export const NewTimer = ({
         reminderTimer2.pause()
     }
 
-    const timeUpHook = (timer, soundFile) => {
+    const timeUpHook = (timer, soundFile, isReminder) => {
         timer.restart(calculateTime(reminderSeconds))
         const sound = new Audio(soundFile)
         sound.play()
-        showNotifications.showNotifications()
+        showNotifications.showNotifications(isReminder)
     }
 
     const twoSign = (count) => {
