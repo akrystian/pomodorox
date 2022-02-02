@@ -62,7 +62,7 @@ class Main extends React.Component {
 
     addTask = (label) => {
         if (label != null) {
-            this.setState({ labels: this.labels.concat([label]) })
+            this.setState({ labels: this.state.labels.concat([label]) })
             localStorage.setItem('state', JSON.stringify(this.state))
         }
     }
@@ -95,21 +95,20 @@ class Main extends React.Component {
     }
 
     render() {
-        const tasks = []
-
-        this.state.labels.forEach((it) => tasks.push(<Aim label={it} />))
+        const tasks = this.state.labels.map((it) => <Aim label={it} />)
 
         return (
             <div className="m-2">
                 <Row>
+                
                     <Col>{tasks}</Col>
                 </Row>
                 <Row>
                     <Col>
                         <InputGroup className="mb-3">
                             <FormControl
-                                value={this.label}
-                                aria-label={this.label}
+                                value={this.state.label}
+                                aria-label={this.state.label}
                                 aria-describedby="basic-addon2"
                                 onChange={(e) =>
                                     this.handleChangeLabel(e.target.value)
@@ -117,7 +116,7 @@ class Main extends React.Component {
                             />
                             <InputGroup.Append>
                                 <Button
-                                    onClick={() => this.addTask(this.label)}
+                                    onClick={() => this.addTask(this.state.label)}
                                 >
                                     +
                                 </Button>
@@ -132,9 +131,7 @@ class Main extends React.Component {
                             type="radio"
                             name="options"
                             value={this.state.mode}
-                            onChange={() =>
-                                this.handleChangeMode(this.state.mode)
-                            }
+                            onChange={this.handleChangeMode}
                         >
                             <ToggleButton value={REGULAR}>Regular</ToggleButton>
                             <ToggleButton value={SHORT_BREAK}>
@@ -152,7 +149,7 @@ class Main extends React.Component {
                 <Row>
                     <Col>
                         <Switch
-                            show={this.state.labels}
+                            show={this.state.mode}
                             showNotifications={(isRemider) => this.showNotifications(isRemider)}
                         />
                         <ReactNotifications
