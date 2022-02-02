@@ -16,8 +16,8 @@ class Main extends React.Component {
         value: [],
         numTask: 1,
         notificationsState: {
-            title: 'Start!',
-            body: 'Some!',
+            title: 'Yep!',
+            body: 'Time is up!',
         },
     }
 
@@ -27,13 +27,13 @@ class Main extends React.Component {
             body: 'Time is up!',
         },
         reminder: {
-            title: 'Peminder!',
+            title: 'Reminder!',
             body: 'You should run the timer!',
         },
     }
 
-    updateLables = (ititle, ibody) =>
-        this.setState({ notificationsState: { title: ititle, body: ibody } })
+    updateLabels = (newTitle, newBody) =>
+        this.setState({ notificationsState: { title: newTitle, body: newBody } })
 
     handleChange = (val) => this.setState({ value: val })
 
@@ -51,13 +51,13 @@ class Main extends React.Component {
     }
 
     setupRemider = () =>
-        this.updateLables(
+        this.updateLabels(
             this.messageLabels.reminder.title,
             this.messageLabels.reminder.body
         )
 
     setupTimesUp = () =>
-        this.updateLables(
+        this.updateLabels(
             this.messageLabels.timeUp.title,
             this.messageLabels.timeUp.body
         )
