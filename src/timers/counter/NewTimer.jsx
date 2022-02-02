@@ -12,8 +12,7 @@ export const NewTimer = ({
 }) => {
     const reminderSound =
         'https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg'
-    const regularSound =
-        'https://actions.google.com/sounds/v1/alarms/radiation_meter.ogg'
+    const regularSound = reminderSound
 
     const calculateTime = (secondsOffset) => {
         const time = new Date()
