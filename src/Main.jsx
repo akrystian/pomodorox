@@ -43,8 +43,8 @@ class Main extends React.Component {
             body: 'Time is up!',
         },
         reminder: {
-            title: 'Reminder!',
-            body: 'You should run the timer!',
+            title: 'Reminder!!!',
+            body: 'You should run the timer!!!!',
         },
     }
 
