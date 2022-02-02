@@ -15,17 +15,52 @@ class Main extends React.Component {
     state = {
         value: [],
         numTask: 1,
+        notificationsState: {
+            title: 'Start!',
+            body: 'Some!',
+        },
     }
+
+    messageLabels = {
+        timeUp: {
+            title: 'Yep!',
+            body: 'Time is up!',
+        },
+        reminder: {
+            title: 'Peminder!',
+            body: 'You should run the timer!',
+        },
+    }
+
+    updateLables = (ititle, ibody) =>
+        this.setState({ notificationsState: { title: ititle, body: ibody } })
 
     handleChange = (val) => this.setState({ value: val })
 
     addTask = () => this.setState({ numTask: this.state.numTask + 1 })
 
-    showNotifications = () => {
+    showNotifications = (isReminder) => {
+        if (isReminder) {
+            this.setupRemider()
+        } else {
+            this.setupTimesUp()
+        }
         if (ReactNotifications.n.supported()) {
             ReactNotifications.n.show()
         }
     }
+
+    setupRemider = () =>
+        this.updateLables(
+            this.messageLabels.reminder.title,
+            this.messageLabels.reminder.body
+        )
+
+    setupTimesUp = () =>
+        this.updateLables(
+            this.messageLabels.timeUp.title,
+            this.messageLabels.timeUp.body
+        )
 
     handleNotificationClick = (event) => {
         ReactNotifications.n.close(event.target.tag)
@@ -80,12 +115,12 @@ class Main extends React.Component {
                     <Col>
                         <Switch
                             show={this.state.value}
-                            showNotifications={() => this.showNotifications()}
+                            showNotifications={(isRemider) => this.showNotifications(isRemider)}
                         />
                         <ReactNotifications
                             onRef={(ref) => (ReactNotifications.n = ref)}
-                            title="Yep!" // Required
-                            body="Time is up!"
+                            title={this.state.notificationsState.title} // Required
+                            body={this.state.notificationsState.body}
                             icon="icon.png"
                             timeout="5000"
                             onClick={(event) =>
