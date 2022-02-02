@@ -13,14 +13,16 @@ export const Aim = ({ label }) => {
     return (
         <Card className="m-2">
             <Card.Body>
-                {label}
-                <Button
-                    type="checkbox"
-                    onClick={() => handleClick()}
-                    variant={colors[isTodo]}
-                >
-                    {states[isTodo]}
-                </Button>
+                <div className="float-left">
+                    <Button
+                        type="checkbox"
+                        onClick={() => handleClick()}
+                        variant={colors[isTodo]}
+                    >
+                        {states[isTodo]}
+                    </Button>&nbsp;&nbsp;
+                    {label}
+                </div>
             </Card.Body>
         </Card>
     )
