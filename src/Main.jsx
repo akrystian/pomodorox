@@ -19,6 +19,10 @@ class Main extends React.Component {
         mode: [],
         numTask: 1,
         label: '',
+        notificationsState: {
+            title: 'Yep!',
+            body: 'Time is up!',
+        }
     }
 
     componentDidMount() {
@@ -32,6 +36,20 @@ class Main extends React.Component {
         this.setState({ labels: labels })
         localStorage.setItem('state', JSON.stringify(this.state))
     }
+
+    messageLabels = {
+        timeUp: {
+            title: 'Yep!',
+            body: 'Time is up!',
+        },
+        reminder: {
+            title: 'Reminder!',
+            body: 'You should run the timer!',
+        },
+    }
+
+    updateLabels = (newTitle, newBody) =>
+        this.setState({ notificationsState: { title: newTitle, body: newBody } })
 
     handleChangeMode = (mode) => {
         this.setState({ mode: mode })
@@ -49,11 +67,28 @@ class Main extends React.Component {
         }
     }
 
-    showNotifications = () => {
+    showNotifications = (isReminder) => {
+        if (isReminder) {
+            this.setupRemider()
+        } else {
+            this.setupTimesUp()
+        }
         if (ReactNotifications.n.supported()) {
             ReactNotifications.n.show()
         }
     }
+
+    setupRemider = () =>
+        this.updateLabels(
+            this.messageLabels.reminder.title,
+            this.messageLabels.reminder.body
+        )
+
+    setupTimesUp = () =>
+        this.updateLabels(
+            this.messageLabels.timeUp.title,
+            this.messageLabels.timeUp.body
+        )
 
     handleNotificationClick = (event) => {
         ReactNotifications.n.close(event.target.tag)
@@ -118,12 +153,12 @@ class Main extends React.Component {
                     <Col>
                         <Switch
                             show={this.state.labels}
-                            showNotifications={() => this.showNotifications()}
+                            showNotifications={(isRemider) => this.showNotifications(isRemider)}
                         />
                         <ReactNotifications
                             onRef={(ref) => (ReactNotifications.n = ref)}
-                            title="Yep!" // Required
-                            body="Time is up!"
+                            title={this.state.notificationsState.title} // Required
+                            body={this.state.notificationsState.body}
                             icon="icon.png"
                             timeout="5000"
                             onClick={(event) =>
