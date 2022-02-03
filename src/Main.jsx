@@ -22,7 +22,7 @@ class Main extends React.Component {
         notificationsState: {
             title: 'Yep!',
             body: 'Time is up!',
-        }
+        },
     }
 
     componentDidMount() {
@@ -49,7 +49,9 @@ class Main extends React.Component {
     }
 
     updateLabels = (newTitle, newBody) =>
-        this.setState({ notificationsState: { title: newTitle, body: newBody } })
+        this.setState({
+            notificationsState: { title: newTitle, body: newBody },
+        })
 
     handleChangeMode = (mode) => {
         this.setState({ mode: mode })
@@ -94,13 +96,32 @@ class Main extends React.Component {
         ReactNotifications.n.close(event.target.tag)
     }
 
+    removeTask = (index) => {
+        if (
+            this.state.labels.length > 0 &&
+            index >= 0 &&
+            this.state.labels.length > index
+        ) {
+            var copy = [...this.state.labels]
+            copy.splice(index, 1)
+            this.setState({ labels: copy })
+            localStorage.setItem('state', JSON.stringify(this.state))
+        }
+    }
+
     render() {
-        const tasks = this.state.labels.map((it) => <Aim label={it} />)
+        var incrementer = 0
+        const tasks = this.state.labels.map((it) => (
+            <Aim
+                index={incrementer++}
+                label={it}
+                deleteHook={this.removeTask}
+            />
+        ))
 
         return (
             <div className="m-2">
                 <Row>
-                
                     <Col>{tasks}</Col>
                 </Row>
                 <Row>
@@ -116,7 +137,9 @@ class Main extends React.Component {
                             />
                             <InputGroup.Append>
                                 <Button
-                                    onClick={() => this.addTask(this.state.label)}
+                                    onClick={() =>
+                                        this.addTask(this.state.label)
+                                    }
                                 >
                                     +
                                 </Button>
@@ -150,7 +173,9 @@ class Main extends React.Component {
                     <Col>
                         <Switch
                             show={this.state.mode}
-                            showNotifications={(isRemider) => this.showNotifications(isRemider)}
+                            showNotifications={(isRemider) =>
+                                this.showNotifications(isRemider)
+                            }
                         />
                         <ReactNotifications
                             onRef={(ref) => (ReactNotifications.n = ref)}
