@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
-import { Button, Card } from 'react-bootstrap'
-import { FaTrash } from 'react-icons/fa'
+import { Badge, Button, ButtonGroup, Card } from 'react-bootstrap'
+import {
+    FaArrowDown,
+    FaArrowUp,
+    FaMinusCircle,
+    FaPlusCircle,
+    FaTrash,
+} from 'react-icons/fa'
 
-export const Aim = ({ index, label, deleteHook }) => {
+export const Aim = ({ index, label, deleteHook, upHook, downHook, minusPointHook, plusPointHook }) => {
     const states = ['todo', 'working', 'done']
     const colors = ['secondary', 'primary', 'success']
     const [isTodo, setTodo] = useState(0)
@@ -27,7 +33,31 @@ export const Aim = ({ index, label, deleteHook }) => {
                         <FaTrash />
                     </Button>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    {label}
+                    <ButtonGroup>
+                        <Button variant="secondary" onClick={() => upHook(index)}>
+                            <FaArrowUp />
+                        </Button>
+
+                        <Button variant="secondary" onClick={() => downHook(index)}>
+                            <FaArrowDown />
+                        </Button>
+                    </ButtonGroup>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <ButtonGroup>
+                        <Button variant="secondary" onClick={() => plusPointHook(index)}>
+                            <FaPlusCircle />
+                        </Button>
+                        <Button variant="secondary" onClick={() => minusPointHook(index)}>
+                            <FaMinusCircle />
+                        </Button>
+                    </ButtonGroup>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    {label.label}
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <Badge pill variant="secondary">
+                        {label.points}
+                    </Badge>
+                    
                 </div>
             </Card.Body>
         </Card>

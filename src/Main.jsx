@@ -64,7 +64,9 @@ class Main extends React.Component {
 
     addTask = (label) => {
         if (label != null) {
-            this.setState({ labels: this.state.labels.concat([label]) })
+            this.setState({
+                labels: this.state.labels.concat([{ label: label, points: 0 }]),
+            })
             localStorage.setItem('state', JSON.stringify(this.state))
         }
     }
@@ -109,6 +111,79 @@ class Main extends React.Component {
         }
     }
 
+    removeTask = (index) => {
+        if (
+            this.state.labels.length > 0 &&
+            index >= 0 &&
+            this.state.labels.length > index
+        ) {
+            var copy = [...this.state.labels]
+            copy.splice(index, 1)
+            this.setState({ labels: copy })
+            localStorage.setItem('state', JSON.stringify(this.state))
+        }
+    }
+
+    moveUpTask = (index) => {
+        if (
+            this.state.labels.length > 1 &&
+            index > 0 &&
+            this.state.labels.length > index
+        ) {
+            var copy = [...this.state.labels]
+            var value = copy[index]
+            copy[index] = copy[index - 1]
+            copy[index - 1] = value
+            this.setState({ labels: copy })
+            localStorage.setItem('state', JSON.stringify(this.state))
+        }
+    }
+
+    moveDownTask = (index) => {
+        console.log('moveDownTask ' + index)
+        if (
+            this.state.labels.length > 1 &&
+            index >= 0 &&
+            this.state.labels.length > index + 1
+        ) {
+            console.log('moveDownTask inn ' + index)
+            var copy = [...this.state.labels]
+            var value = copy[index]
+            copy[index] = copy[index + 1]
+            copy[index + 1] = value
+            this.setState({ labels: copy })
+            localStorage.setItem('state', JSON.stringify(this.state))
+        }
+    }
+
+    plusPoints = (index) => {
+        if (
+            this.state.labels.length > 0 &&
+            index >= 0 &&
+            this.state.labels.length > index
+        ) {
+            var copy = [...this.state.labels]
+            copy[index].points = copy[index].points + 1
+            this.setState({ labels: copy })
+            localStorage.setItem('state', JSON.stringify(this.state))
+        }
+    }
+
+    minusPoints = (index) => {
+        if (
+            this.state.labels.length > 0 &&
+            index >= 0 &&
+            this.state.labels.length > index
+        ) {
+            var copy = [...this.state.labels]
+            if (copy[index].points > 0) {
+                copy[index].points = copy[index].points - 1
+                this.setState({ labels: copy })
+                localStorage.setItem('state', JSON.stringify(this.state))
+            }
+        }
+    }
+
     render() {
         var incrementer = 0
         const tasks = this.state.labels.map((it) => (
@@ -116,6 +191,10 @@ class Main extends React.Component {
                 index={incrementer++}
                 label={it}
                 deleteHook={this.removeTask}
+                plusPointHook={this.plusPoints}
+                minusPointHook={this.minusPoints}
+                upHook={this.moveUpTask}
+                downHook={this.moveDownTask}
             />
         ))
 
