@@ -26,65 +26,74 @@ export const Aim = ({
     }
 
     return (
-        <Card className="m-2">
-            <Card.Body>
-                <div className="float-left">
-                    <Button
-                        type="checkbox"
-                        onClick={() => handleClick()}
-                        variant={colors[isTodo]}
-                        size="sm"
-                    >
-                        {states[isTodo]}
-                    </Button>
-                    <ButtonGroup>
+        <>
+            <style type="text/css">
+            {`
+            .card-body {
+              padding: 0.1rem 0.1rem;  
+             }
+            `}
+            </style>
+            <Card className="m-2">
+                <Card.Body>
+                    <div className="float-left">
                         <Button
-                            variant="secondary"
-                            onClick={() => upHook(index)}
+                            type="checkbox"
+                            onClick={() => handleClick()}
+                            variant={colors[isTodo]}
                             size="sm"
                         >
-                            <FaArrowUp />
+                            {states[isTodo]}
                         </Button>
+                        <ButtonGroup>
+                            <Button
+                                variant="secondary"
+                                onClick={() => upHook(index)}
+                                size="sm"
+                            >
+                                <FaArrowUp />
+                            </Button>
 
+                            <Button
+                                variant="secondary"
+                                onClick={() => downHook(index)}
+                                size="sm"
+                            >
+                                <FaArrowDown />
+                            </Button>
+                        </ButtonGroup>
                         <Button
-                            variant="secondary"
-                            onClick={() => downHook(index)}
+                            variant="danger"
+                            onClick={() => deleteHook(index)}
                             size="sm"
                         >
-                            <FaArrowDown />
+                            <FaTrash />
                         </Button>
-                    </ButtonGroup>
-                    <Button
-                        variant="danger"
-                        onClick={() => deleteHook(index)}
-                        size="sm"
-                    >
-                        <FaTrash />
-                    </Button>
-                    <ButtonGroup>
-                        <Button
-                            variant="secondary"
-                            onClick={() => plusPointHook(index)}
-                            size="sm"
-                        >
-                            <FaPlusCircle />
-                        </Button>
-                        <Button
-                            variant="secondary"
-                            onClick={() => minusPointHook(index)}
-                            size="sm"
-                        >
-                            <FaMinusCircle />
-                        </Button>
-                    </ButtonGroup>{' '}
-                    <Badge pill variant="secondary">
-                        {label.points}
-                    </Badge>
-                    &nbsp; &nbsp; &nbsp;
-                    {label.label}
-                </div>
-            </Card.Body>
-        </Card>
+                        <ButtonGroup>
+                            <Button
+                                variant="secondary"
+                                onClick={() => plusPointHook(index)}
+                                size="sm"
+                            >
+                                <FaPlusCircle />
+                            </Button>
+                            <Button
+                                variant="secondary"
+                                onClick={() => minusPointHook(index)}
+                                size="sm"
+                            >
+                                <FaMinusCircle />
+                            </Button>
+                        </ButtonGroup>{' '}
+                        <Badge pill variant="secondary">
+                            {label.points}
+                        </Badge>
+                        {' '}
+                        {label.label}
+                    </div>
+                </Card.Body>
+            </Card>
+        </>
     )
 }
 
