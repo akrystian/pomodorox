@@ -8,7 +8,15 @@ import {
     FaTrash,
 } from 'react-icons/fa'
 
-export const Aim = ({ index, label, deleteHook, upHook, downHook, minusPointHook, plusPointHook }) => {
+export const Aim = ({
+    index,
+    label,
+    deleteHook,
+    upHook,
+    downHook,
+    minusPointHook,
+    plusPointHook,
+}) => {
     const states = ['todo', 'working', 'done']
     const colors = ['secondary', 'primary', 'success']
     const [isTodo, setTodo] = useState(0)
@@ -25,39 +33,55 @@ export const Aim = ({ index, label, deleteHook, upHook, downHook, minusPointHook
                         type="checkbox"
                         onClick={() => handleClick()}
                         variant={colors[isTodo]}
+                        size="sm"
                     >
                         {states[isTodo]}
                     </Button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    <Button variant="danger" onClick={() => deleteHook(index)}>
-                        <FaTrash />
-                    </Button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
                     <ButtonGroup>
-                        <Button variant="secondary" onClick={() => upHook(index)}>
+                        <Button
+                            variant="secondary"
+                            onClick={() => upHook(index)}
+                            size="sm"
+                        >
                             <FaArrowUp />
                         </Button>
 
-                        <Button variant="secondary" onClick={() => downHook(index)}>
+                        <Button
+                            variant="secondary"
+                            onClick={() => downHook(index)}
+                            size="sm"
+                        >
                             <FaArrowDown />
                         </Button>
                     </ButtonGroup>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <Button
+                        variant="danger"
+                        onClick={() => deleteHook(index)}
+                        size="sm"
+                    >
+                        <FaTrash />
+                    </Button>
                     <ButtonGroup>
-                        <Button variant="secondary" onClick={() => plusPointHook(index)}>
+                        <Button
+                            variant="secondary"
+                            onClick={() => plusPointHook(index)}
+                            size="sm"
+                        >
                             <FaPlusCircle />
                         </Button>
-                        <Button variant="secondary" onClick={() => minusPointHook(index)}>
+                        <Button
+                            variant="secondary"
+                            onClick={() => minusPointHook(index)}
+                            size="sm"
+                        >
                             <FaMinusCircle />
                         </Button>
-                    </ButtonGroup>
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    {label.label}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    </ButtonGroup>{' '}
                     <Badge pill variant="secondary">
                         {label.points}
                     </Badge>
-                    
+                    &nbsp; &nbsp; &nbsp;
+                    {label.label}
                 </div>
             </Card.Body>
         </Card>
