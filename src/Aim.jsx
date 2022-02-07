@@ -30,7 +30,7 @@ export const Aim = ({
             <style type="text/css">
                 {`
             .card-body {
-              padding: 0.1rem 0.1rem;  
+              padding: 0.1rem 0.1rem;
              }
             `}
             </style>
