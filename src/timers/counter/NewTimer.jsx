@@ -47,7 +47,7 @@ export const NewTimer = ({
         timer.restart(calculateTime(reminderSeconds))
         const sound = new Audio(soundFile)
         sound.play()
-        showNotifications.showNotifications(isReminder)
+        showNotifications(isReminder)
     }
 
     const twoSign = (count) => {
