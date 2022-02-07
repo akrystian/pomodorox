@@ -1,10 +1,12 @@
 import React from 'react'
-import { Navbar } from 'react-bootstrap'
+import { Navbar, Button } from 'react-bootstrap'
 
-function Footer() {
+function Footer({ setDebugMode }) {
     return (
-        <Navbar bg="dark" variant="dark" sticky="bottom">
-            PomidoroX &copy; 2021
+        <Navbar bg="dark" variant="dark" fixed="bottom">
+            <Button variant="link" onClick={() => setDebugMode(true)} size="sm">
+                PomidoroX &copy; 2021
+            </Button>
         </Navbar>
     )
 }

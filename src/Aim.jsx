@@ -44,26 +44,7 @@ export const Aim = ({
                             size="sm"
                         >
                             {states[isTodo]}
-                        </Button>
-                        {' '}
-                        <ButtonGroup>
-                            <Button
-                                variant="secondary"
-                                onClick={() => upHook(index)}
-                                size="sm"
-                            >
-                                <FaArrowUp />
-                            </Button>
-
-                            <Button
-                                variant="secondary"
-                                onClick={() => downHook(index)}
-                                size="sm"
-                            >
-                                <FaArrowDown />
-                            </Button>
-                        </ButtonGroup>
-                        {' '}
+                        </Button>{' '}
                         <ButtonGroup>
                             <Button
                                 variant="secondary"
@@ -86,6 +67,23 @@ export const Aim = ({
                         <strong>{label.label}</strong>
                     </div>
                     <div className="float-right">
+                        <ButtonGroup>
+                            <Button
+                                variant="secondary"
+                                onClick={() => upHook(index)}
+                                size="sm"
+                            >
+                                <FaArrowUp />
+                            </Button>
+
+                            <Button
+                                variant="secondary"
+                                onClick={() => downHook(index)}
+                                size="sm"
+                            >
+                                <FaArrowDown />
+                            </Button>
+                        </ButtonGroup>{' '}
                         <Button
                             variant="danger"
                             onClick={() => deleteHook(index)}

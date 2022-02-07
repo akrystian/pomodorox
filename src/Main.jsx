@@ -184,6 +184,12 @@ class Main extends React.Component {
         }
     }
 
+    debugElement = (debugMode) => {
+        if (this.props.debugMode) {
+            return <ToggleButton value={TEST_BREAK}>Test break</ToggleButton>
+        }
+    }
+
     render() {
         var incrementer = 0
         const tasks = this.state.labels.map((it) => (
@@ -242,9 +248,7 @@ class Main extends React.Component {
                             <ToggleButton value={LONG_BREAK}>
                                 Long break
                             </ToggleButton>
-                            <ToggleButton value={TEST_BREAK}>
-                                Test break
-                            </ToggleButton>
+                            {this.debugElement(this.props.debugMode)}
                         </ToggleButtonGroup>
                     </Col>
                 </Row>
@@ -255,6 +259,7 @@ class Main extends React.Component {
                             showNotifications={(isRemider) =>
                                 this.showNotifications(isRemider)
                             }
+                            debugMode={this.props.debugMode}
                         />
                         <ReactNotifications
                             onRef={(ref) => (ReactNotifications.n = ref)}
