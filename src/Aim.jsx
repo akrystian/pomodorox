@@ -28,7 +28,7 @@ export const Aim = ({
     return (
         <>
             <style type="text/css">
-            {`
+                {`
             .card-body {
               padding: 0.1rem 0.1rem;  
              }
@@ -45,6 +45,7 @@ export const Aim = ({
                         >
                             {states[isTodo]}
                         </Button>
+                        {' '}
                         <ButtonGroup>
                             <Button
                                 variant="secondary"
@@ -62,13 +63,7 @@ export const Aim = ({
                                 <FaArrowDown />
                             </Button>
                         </ButtonGroup>
-                        <Button
-                            variant="danger"
-                            onClick={() => deleteHook(index)}
-                            size="sm"
-                        >
-                            <FaTrash />
-                        </Button>
+                        {' '}
                         <ButtonGroup>
                             <Button
                                 variant="secondary"
@@ -87,9 +82,17 @@ export const Aim = ({
                         </ButtonGroup>{' '}
                         <Badge pill variant="secondary">
                             {label.points}
-                        </Badge>
-                        {' '}
-                        {label.label}
+                        </Badge>{' '}
+                        <strong>{label.label}</strong>
+                    </div>
+                    <div className="float-right">
+                        <Button
+                            variant="danger"
+                            onClick={() => deleteHook(index)}
+                            size="sm"
+                        >
+                            <FaTrash />
+                        </Button>
                     </div>
                 </Card.Body>
             </Card>
