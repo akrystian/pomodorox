@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Row, Col, Button, Card } from 'react-bootstrap'
+import { Row, Col, Button, Card, Badge } from 'react-bootstrap'
 import { useTimer } from 'react-timer-hook'
 
 import { FaRedo, FaPause, FaPlay } from 'react-icons/fa'
@@ -20,7 +20,7 @@ export const NewTimer = ({
         return time
     }
 
-    const { seconds, minutes, start, pause, restart } = useTimer({
+    const { seconds, minutes, start, pause, restart, isRunning } = useTimer({
         expiryTimestamp: calculateTime(timerSeconds),
         onExpire: () => timeUpHook(reminderTimer, regularSound, false),
     })
@@ -41,6 +41,12 @@ export const NewTimer = ({
         pause()
         reminderTimer.pause()
         reminderTimer2.pause()
+    }
+
+    const isPaused = () => {
+        return (
+            !reminderTimer.isRunning && !reminderTimer2.isRunning && !isRunning
+        )
     }
 
     const timeUpHook = (timer, soundFile, isReminder) => {
@@ -69,6 +75,29 @@ export const NewTimer = ({
         </Row>
     )
 
+    const pauseWarning = !isPaused() ? null : (
+        <h1>
+            <>
+                <style type="text/css">
+                    {`
+                    .blinking {
+                        animation: 2.0s linear infinite blinking;
+                    }
+                    
+                    @keyframes blinking {
+                        0% {opacity: 0;}
+                        50% {opacity: 1;}
+                        100% {opacity: 0;}
+                    }
+                    `}
+                </style>
+                <Badge variant="danger" className="blinking">
+                    Timer Stopped!
+                </Badge>
+            </>
+        </h1>
+    )
+
     return (
         <Fragment>
             <Card className="m-2">
@@ -81,6 +110,9 @@ export const NewTimer = ({
                                 </h1>
                             </code>
                         </Col>
+                    </Row>
+                    <Row>
+                        <Col>{pauseWarning}</Col>
                     </Row>
                     <Row>
                         <Col>{debugTimer}</Col>
