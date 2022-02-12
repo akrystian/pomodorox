@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Row, Col, Button, Card, Badge, Spinner } from 'react-bootstrap'
+import { Row, Col, Button, Card, Badge } from 'react-bootstrap'
 import { useTimer } from 'react-timer-hook'
 
 import { FaRedo, FaPause, FaPlay } from 'react-icons/fa'
