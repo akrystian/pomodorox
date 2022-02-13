@@ -18,11 +18,12 @@ export const Aim = ({
     minusPointHook,
     plusPointHook,
     toggleDone,
+    select,
 }) => {
     return (
         <>
             <style type="text/css">
-                {`
+            {`
             .card-body {
               padding: 0.1rem 0.1rem;
              }
@@ -42,9 +43,9 @@ export const Aim = ({
                         ></ToggleButton>
                         <Button
                             variant="secondary"
-                            onClick={() => null}
                             size="sm"
                             disabled={label.done}
+                            onClick={(e) => select(index)}
                         >
                             <FaHourglassStart />
                         </Button>{' '}

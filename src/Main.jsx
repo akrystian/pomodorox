@@ -19,6 +19,7 @@ class Main extends React.Component {
         mode: [],
         numTask: 1,
         label: '',
+        selected: '',
         notificationsState: {
             title: 'Yep!',
             body: 'Time is up!',
@@ -63,11 +64,12 @@ class Main extends React.Component {
     }
 
     addTask = (label) => {
-        if (label != null) {
+        if (label != null && label !== '') {
             this.setState((prevState) => ({
                 labels: prevState.labels.concat([
                     { label: label, done: false, points: 0 },
                 ]),
+                label: '',
             }))
             localStorage.setItem('state', JSON.stringify(this.state))
         }
@@ -158,6 +160,20 @@ class Main extends React.Component {
         }
     }
 
+    select = (index) => {
+        if (
+            this.state.labels.length >= 0 &&
+            index >= 0 &&
+            this.state.labels.length > index
+        ) {
+            var selected = this.state.labels[index]
+            if (!selected.done) {
+                this.setState({ selected: selected.label })
+                localStorage.setItem('state', JSON.stringify(this.state))
+            }
+        }
+    }
+
     plusPoints = (index) => {
         if (
             this.state.labels.length > 0 &&
@@ -188,8 +204,28 @@ class Main extends React.Component {
 
     debugElement = (debugMode) => {
         if (this.props.debugMode) {
-            return <ToggleButton value={TEST_BREAK}>Test break</ToggleButton>
+            return (
+                <ToggleButton
+                    value={TEST_BREAK}
+                    disabled={this.state.selected === ''}
+                >
+                    Test break
+                </ToggleButton>
+            )
         }
+    }
+
+    currentTask = () => {
+        return (
+            <Row>
+                <Col>
+                    <h3>
+                        Current:{' '}
+                        {this.state.mode === REGULAR ? this.state.selected : ''}
+                    </h3>
+                </Col>
+            </Row>
+        )
     }
 
     render() {
@@ -204,6 +240,7 @@ class Main extends React.Component {
                 upHook={this.moveUpTask}
                 downHook={this.moveDownTask}
                 toggleDone={this.toggleDone}
+                select={this.select}
             />
         ))
 
@@ -235,6 +272,7 @@ class Main extends React.Component {
                         </InputGroup>
                     </Col>
                 </Row>
+                {this.currentTask()}
                 <Row>
                     <Col>
                         <ToggleButtonGroup
@@ -244,11 +282,22 @@ class Main extends React.Component {
                             value={this.state.mode}
                             onChange={this.handleChangeMode}
                         >
-                            <ToggleButton value={REGULAR}>Regular</ToggleButton>
-                            <ToggleButton value={SHORT_BREAK}>
+                            <ToggleButton
+                                value={REGULAR}
+                                disabled={this.state.selected === ''}
+                            >
+                                Regular
+                            </ToggleButton>
+                            <ToggleButton
+                                value={SHORT_BREAK}
+                                disabled={this.state.selected === ''}
+                            >
                                 Short break
                             </ToggleButton>
-                            <ToggleButton value={LONG_BREAK}>
+                            <ToggleButton
+                                value={LONG_BREAK}
+                                disabled={this.state.selected === ''}
+                            >
                                 Long break
                             </ToggleButton>
                             {this.debugElement(this.props.debugMode)}
