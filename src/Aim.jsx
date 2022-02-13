@@ -23,7 +23,7 @@ export const Aim = ({
     return (
         <>
             <style type="text/css">
-                {`
+            {`
             .card-body {
               padding: 0.1rem 0.1rem;
              }

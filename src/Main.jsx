@@ -204,7 +204,14 @@ class Main extends React.Component {
 
     debugElement = (debugMode) => {
         if (this.props.debugMode) {
-            return <ToggleButton value={TEST_BREAK}>Test break</ToggleButton>
+            return (
+                <ToggleButton
+                    value={TEST_BREAK}
+                    disabled={this.state.selected === ''}
+                >
+                    Test break
+                </ToggleButton>
+            )
         }
     }
 
@@ -275,11 +282,22 @@ class Main extends React.Component {
                             value={this.state.mode}
                             onChange={this.handleChangeMode}
                         >
-                            <ToggleButton value={REGULAR}>Regular</ToggleButton>
-                            <ToggleButton value={SHORT_BREAK}>
+                            <ToggleButton
+                                value={REGULAR}
+                                disabled={this.state.selected === ''}
+                            >
+                                Regular
+                            </ToggleButton>
+                            <ToggleButton
+                                value={SHORT_BREAK}
+                                disabled={this.state.selected === ''}
+                            >
                                 Short break
                             </ToggleButton>
-                            <ToggleButton value={LONG_BREAK}>
+                            <ToggleButton
+                                value={LONG_BREAK}
+                                disabled={this.state.selected === ''}
+                            >
                                 Long break
                             </ToggleButton>
                             {this.debugElement(this.props.debugMode)}
