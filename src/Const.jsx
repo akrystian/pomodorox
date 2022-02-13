@@ -4,4 +4,5 @@ module.exports = {
     LONG_BREAK: 'LONG_BREAK',
     TEST_BREAK: 'TEST_BREAK',
     NONE: 'NONE',
+    VERSION: 3
 }

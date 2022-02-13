@@ -8,10 +8,11 @@ import {
     FormControl,
     InputGroup,
 } from 'react-bootstrap'
-import { LONG_BREAK, REGULAR, SHORT_BREAK, TEST_BREAK } from './Const'
+import { LONG_BREAK, REGULAR, SHORT_BREAK, TEST_BREAK, VERSION } from './Const'
 import Aim from './Aim'
 import { Switch } from './Switch'
 import ReactNotifications from 'react-browser-notifications'
+import { v4 as uuidv4 } from 'uuid'
 
 class Main extends React.Component {
     state = {
@@ -19,17 +20,21 @@ class Main extends React.Component {
         mode: [],
         numTask: 1,
         label: '',
-        selected: '',
+        selected: null,
         notificationsState: {
             title: 'Yep!',
             body: 'Time is up!',
         },
+        version: VERSION,
     }
 
     componentDidMount() {
-        var s = localStorage.getItem('state')
-        if (s != null) {
-            this.setState(JSON.parse(s))
+        var stateString = localStorage.getItem('state')
+        if (stateString != null) {
+            const savedState = JSON.parse(stateString)
+            if (savedState.version >= VERSION) {
+                this.setState(savedState)
+            }
         }
     }
 
@@ -63,11 +68,15 @@ class Main extends React.Component {
         this.setState({ label: label })
     }
 
+    genId = () => {
+        return uuidv4()
+    }
+
     addTask = (label) => {
         if (label != null && label !== '') {
             this.setState((prevState) => ({
                 labels: prevState.labels.concat([
-                    { label: label, done: false, points: 0 },
+                    { id: this.genId(), label: label, done: false, points: 0 },
                 ]),
                 label: '',
             }))
@@ -131,13 +140,11 @@ class Main extends React.Component {
     }
 
     moveDownTask = (index) => {
-        console.log('moveDownTask ' + index)
         if (
             this.state.labels.length > 1 &&
             index >= 0 &&
             this.state.labels.length > index + 1
         ) {
-            console.log('moveDownTask inn ' + index)
             var copy = [...this.state.labels]
             var value = copy[index]
             copy[index] = copy[index + 1]
@@ -168,7 +175,7 @@ class Main extends React.Component {
         ) {
             var selected = this.state.labels[index]
             if (!selected.done) {
-                this.setState({ selected: selected.label })
+                this.setState({ selected: selected.id })
                 localStorage.setItem('state', JSON.stringify(this.state))
             }
         }
@@ -216,22 +223,29 @@ class Main extends React.Component {
     }
 
     currentTask = () => {
+        const current = this.state.labels
+            .filter((it) => it.id === this.state.selected)
+            .map((it) => it.label)
         return (
             <Row>
                 <Col>
-                    <h3>
-                        Current:{' '}
-                        {this.state.mode === REGULAR ? this.state.selected : ''}
-                    </h3>
+                    <h3>Current: {current}</h3>
                 </Col>
             </Row>
         )
+    }
+
+    handleEnterKeyPress = (target) => {
+        if (target.charCode === 13) {
+            this.addTask(this.state.label)
+        }
     }
 
     render() {
         var incrementer = 0
         const tasks = this.state.labels.map((it) => (
             <Aim
+                key={it.id}
                 index={incrementer++}
                 label={it}
                 deleteHook={this.removeTask}
@@ -241,6 +255,7 @@ class Main extends React.Component {
                 downHook={this.moveDownTask}
                 toggleDone={this.toggleDone}
                 select={this.select}
+                selected={it.id === this.state.selected}
             />
         ))
 
@@ -259,6 +274,7 @@ class Main extends React.Component {
                                 onChange={(e) =>
                                     this.handleChangeLabel(e.target.value)
                                 }
+                                onKeyPress={this.handleEnterKeyPress}
                             />
                             <InputGroup.Append>
                                 <Button

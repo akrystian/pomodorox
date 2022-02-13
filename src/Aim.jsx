@@ -19,17 +19,18 @@ export const Aim = ({
     plusPointHook,
     toggleDone,
     select,
+    selected,
 }) => {
     return (
         <>
             <style type="text/css">
-            {`
+                {`
             .card-body {
               padding: 0.1rem 0.1rem;
              }
             `}
             </style>
-            <Card className="m-2">
+            <Card className="m-2" border={selected ? 'dark' : ''}>
                 <Card.Body>
                     <div className="float-left">
                         <ToggleButton
