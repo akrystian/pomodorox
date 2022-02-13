@@ -64,9 +64,11 @@ class Main extends React.Component {
 
     addTask = (label) => {
         if (label != null) {
-            this.setState({
-                labels: this.state.labels.concat([{ label: label, points: 0 }]),
-            })
+            this.setState((prevState) => ({
+                labels: prevState.labels.concat([
+                    { label: label, done: false, points: 0 },
+                ]),
+            }))
             localStorage.setItem('state', JSON.stringify(this.state))
         }
     }
@@ -111,19 +113,6 @@ class Main extends React.Component {
         }
     }
 
-    removeTask = (index) => {
-        if (
-            this.state.labels.length > 0 &&
-            index >= 0 &&
-            this.state.labels.length > index
-        ) {
-            var copy = [...this.state.labels]
-            copy.splice(index, 1)
-            this.setState({ labels: copy })
-            localStorage.setItem('state', JSON.stringify(this.state))
-        }
-    }
-
     moveUpTask = (index) => {
         if (
             this.state.labels.length > 1 &&
@@ -151,6 +140,19 @@ class Main extends React.Component {
             var value = copy[index]
             copy[index] = copy[index + 1]
             copy[index + 1] = value
+            this.setState({ labels: copy })
+            localStorage.setItem('state', JSON.stringify(this.state))
+        }
+    }
+
+    toggleDone = (index) => {
+        if (
+            this.state.labels.length >= 0 &&
+            index >= 0 &&
+            this.state.labels.length > index
+        ) {
+            var copy = [...this.state.labels]
+            copy[index].done = !copy[index].done
             this.setState({ labels: copy })
             localStorage.setItem('state', JSON.stringify(this.state))
         }
@@ -201,6 +203,7 @@ class Main extends React.Component {
                 minusPointHook={this.minusPoints}
                 upHook={this.moveUpTask}
                 downHook={this.moveDownTask}
+                toggleDone={this.toggleDone}
             />
         ))
 
