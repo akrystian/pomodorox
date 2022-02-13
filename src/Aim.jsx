@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
-import { Badge, Button, ButtonGroup, Card } from 'react-bootstrap'
+import React from 'react'
+import { Badge, Button, ButtonGroup, Card, ToggleButton } from 'react-bootstrap'
 import {
     FaArrowDown,
     FaArrowUp,
+    FaHourglassStart,
     FaMinusCircle,
     FaPlusCircle,
     FaTrash,
@@ -16,15 +17,8 @@ export const Aim = ({
     downHook,
     minusPointHook,
     plusPointHook,
+    toggleDone,
 }) => {
-    const states = ['todo', 'working', 'done']
-    const colors = ['secondary', 'primary', 'success']
-    const [isTodo, setTodo] = useState(0)
-
-    const handleClick = () => {
-        setTodo((isTodo + 1) % states.length)
-    }
-
     return (
         <>
             <style type="text/css">
@@ -37,19 +31,29 @@ export const Aim = ({
             <Card className="m-2">
                 <Card.Body>
                     <div className="float-left">
-                        <Button
+                        <ToggleButton
+                            className="mb-2"
+                            id="toggle-check"
                             type="checkbox"
-                            onClick={() => handleClick()}
-                            variant={colors[isTodo]}
+                            variant="light-outline"
+                            checked={label.done}
+                            value="1"
+                            onChange={(e) => toggleDone(index)}
+                        ></ToggleButton>
+                        <Button
+                            variant="secondary"
+                            onClick={() => null}
                             size="sm"
+                            disabled={label.done}
                         >
-                            {states[isTodo]}
+                            <FaHourglassStart />
                         </Button>{' '}
-                        <ButtonGroup>
+                        <ButtonGroup vertical={true}>
                             <Button
                                 variant="secondary"
                                 onClick={() => plusPointHook(index)}
                                 size="sm"
+                                disabled={label.done}
                             >
                                 <FaPlusCircle />
                             </Button>
@@ -57,6 +61,7 @@ export const Aim = ({
                                 variant="secondary"
                                 onClick={() => minusPointHook(index)}
                                 size="sm"
+                                disabled={label.done}
                             >
                                 <FaMinusCircle />
                             </Button>
@@ -67,7 +72,7 @@ export const Aim = ({
                         <strong>{label.label}</strong>
                     </div>
                     <div className="float-right">
-                        <ButtonGroup>
+                        <ButtonGroup vertical={true}>
                             <Button
                                 variant="secondary"
                                 onClick={() => upHook(index)}
@@ -75,7 +80,6 @@ export const Aim = ({
                             >
                                 <FaArrowUp />
                             </Button>
-
                             <Button
                                 variant="secondary"
                                 onClick={() => downHook(index)}
