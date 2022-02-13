@@ -18,6 +18,7 @@ export const Aim = ({
     minusPointHook,
     plusPointHook,
     toggleDone,
+    select,
 }) => {
     return (
         <>
@@ -42,9 +43,9 @@ export const Aim = ({
                         ></ToggleButton>
                         <Button
                             variant="secondary"
-                            onClick={() => null}
                             size="sm"
                             disabled={label.done}
+                            onClick={(e) => select(index)}
                         >
                             <FaHourglassStart />
                         </Button>{' '}

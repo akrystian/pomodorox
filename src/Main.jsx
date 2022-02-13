@@ -19,6 +19,7 @@ class Main extends React.Component {
         mode: [],
         numTask: 1,
         label: '',
+        selected: '',
         notificationsState: {
             title: 'Yep!',
             body: 'Time is up!',
@@ -63,11 +64,12 @@ class Main extends React.Component {
     }
 
     addTask = (label) => {
-        if (label != null) {
+        if (label != null && label !== '') {
             this.setState((prevState) => ({
                 labels: prevState.labels.concat([
                     { label: label, done: false, points: 0 },
                 ]),
+                label: '',
             }))
             localStorage.setItem('state', JSON.stringify(this.state))
         }
@@ -158,6 +160,20 @@ class Main extends React.Component {
         }
     }
 
+    select = (index) => {
+        if (
+            this.state.labels.length >= 0 &&
+            index >= 0 &&
+            this.state.labels.length > index
+        ) {
+            var selected = this.state.labels[index]
+            if (!selected.done) {
+                this.setState({ selected: selected.label })
+                localStorage.setItem('state', JSON.stringify(this.state))
+            }
+        }
+    }
+
     plusPoints = (index) => {
         if (
             this.state.labels.length > 0 &&
@@ -192,6 +208,19 @@ class Main extends React.Component {
         }
     }
 
+    currentTask = () => {
+        return (
+            <Row>
+                <Col>
+                    <h3>
+                        Current:{' '}
+                        {this.state.mode === REGULAR ? this.state.selected : ''}
+                    </h3>
+                </Col>
+            </Row>
+        )
+    }
+
     render() {
         var incrementer = 0
         const tasks = this.state.labels.map((it) => (
@@ -204,6 +233,7 @@ class Main extends React.Component {
                 upHook={this.moveUpTask}
                 downHook={this.moveDownTask}
                 toggleDone={this.toggleDone}
+                select={this.select}
             />
         ))
 
@@ -235,6 +265,7 @@ class Main extends React.Component {
                         </InputGroup>
                     </Col>
                 </Row>
+                {this.currentTask()}
                 <Row>
                     <Col>
                         <ToggleButtonGroup
