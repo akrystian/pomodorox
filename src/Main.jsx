@@ -261,33 +261,6 @@ class Main extends React.Component {
 
         return (
             <div className="m-2">
-                <Row>
-                    <Col>{tasks}</Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <InputGroup className="mb-3">
-                            <FormControl
-                                value={this.state.label}
-                                aria-label={this.state.label}
-                                aria-describedby="basic-addon2"
-                                onChange={(e) =>
-                                    this.handleChangeLabel(e.target.value)
-                                }
-                                onKeyPress={this.handleEnterKeyPress}
-                            />
-                            <InputGroup.Append>
-                                <Button
-                                    onClick={() =>
-                                        this.addTask(this.state.label)
-                                    }
-                                >
-                                    +
-                                </Button>
-                            </InputGroup.Append>
-                        </InputGroup>
-                    </Col>
-                </Row>
                 {this.currentTask()}
                 <Row>
                     <Col>
@@ -339,6 +312,33 @@ class Main extends React.Component {
                                 this.handleNotificationClick(event)
                             }
                         />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>{tasks}</Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <InputGroup className="mb-3">
+                            <FormControl
+                                value={this.state.label}
+                                aria-label={this.state.label}
+                                aria-describedby="basic-addon2"
+                                onChange={(e) =>
+                                    this.handleChangeLabel(e.target.value)
+                                }
+                                onKeyPress={this.handleEnterKeyPress}
+                            />
+                            <InputGroup.Append>
+                                <Button
+                                    onClick={() =>
+                                        this.addTask(this.state.label)
+                                    }
+                                >
+                                    +
+                                </Button>
+                            </InputGroup.Append>
+                        </InputGroup>
                     </Col>
                 </Row>
             </div>

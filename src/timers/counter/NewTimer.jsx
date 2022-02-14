@@ -44,9 +44,7 @@ export const NewTimer = ({
     }
 
     const isPaused = () => {
-        return (
-            !reminderTimer.isRunning && !reminderTimer2.isRunning && !isRunning
-        )
+        return !isRunning
     }
 
     const timeUpHook = (timer, soundFile, isReminder) => {

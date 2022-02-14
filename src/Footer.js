@@ -3,7 +3,7 @@ import { Navbar, Button } from 'react-bootstrap'
 
 function Footer({ setDebugMode }) {
     return (
-        <Navbar bg="dark" variant="dark" fixed="bottom">
+        <Navbar bg="light" variant="light">
             PomidoroX &copy; 2021
             <Button variant="link" onClick={() => setDebugMode(true)} size="sm">
                 .

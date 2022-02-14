@@ -30,7 +30,11 @@ export const Aim = ({
              }
             `}
             </style>
-            <Card className="m-2" border={selected ? 'dark' : ''}>
+            <Card
+                className="m-2"
+                border={label.done ? 'success' : selected ? 'primary' : ''}
+                bg={label.done ? 'success' : ''}
+            >
                 <Card.Body>
                     <div className="float-left">
                         <ToggleButton
