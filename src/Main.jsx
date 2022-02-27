@@ -13,6 +13,8 @@ import Aim from './Aim'
 import { Switch } from './Switch'
 import ReactNotifications from 'react-browser-notifications'
 import { v4 as uuidv4 } from 'uuid'
+import Event from './Event'
+import EventStatus from './EventStatus'
 
 class Main extends React.Component {
     state = {
@@ -25,7 +27,28 @@ class Main extends React.Component {
             title: 'Yep!',
             body: 'Time is up!',
         },
+        events: [],
         version: VERSION,
+    }
+
+    handleEvent = (task, status) => {
+        this.saveEvents({
+            timestamp: new Date(),
+            task: task,
+            status: status.name,
+        })
+    }
+
+    saveEvents = (event) => {
+        this.setState((previousState) => ({
+            events: previousState.events.concat([
+                {
+                    timestamp: event.timestamp,
+                    task: event.task,
+                    status: event.status,
+                },
+            ]),
+        }))
     }
 
     componentDidMount() {
@@ -74,6 +97,7 @@ class Main extends React.Component {
 
     addTask = (label) => {
         if (label != null && label !== '') {
+            this.handleEvent('addTask', EventStatus.POINT)
             this.setState((prevState) => ({
                 labels: prevState.labels.concat([
                     { id: this.genId(), label: label, done: false, points: 0 },
@@ -259,6 +283,8 @@ class Main extends React.Component {
             />
         ))
 
+        const eventTasks = this.state.events.map((it) => <Event event={it} />)
+
         return (
             <div className="m-2">
                 {this.currentTask()}
@@ -341,6 +367,7 @@ class Main extends React.Component {
                         </InputGroup>
                     </Col>
                 </Row>
+                {eventTasks}
             </div>
         )
     }
