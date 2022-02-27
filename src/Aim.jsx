@@ -25,15 +25,15 @@ export const Aim = ({
         <>
             <style type="text/css">
                 {`
-            .card-body {
-              padding: 0.1rem 0.1rem;
-             }
-            `}
+                    .card-body {
+                        padding: 0.1rem 0.1rem;
+                    }
+                `}
             </style>
             <Card
                 className="m-2"
                 border={label.done ? 'success' : selected ? 'primary' : ''}
-                bg={label.done ? 'success' : ''}
+                bg={label.done ? 'success' : selected ? 'primary' : ''}
             >
                 <Card.Body>
                     <div className="float-left">

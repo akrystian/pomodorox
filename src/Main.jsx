@@ -229,7 +229,9 @@ class Main extends React.Component {
         return (
             <Row>
                 <Col>
-                    <h3>Current: {current}</h3>
+                    <h1>
+                        <strong>Current: {current}</strong>
+                    </h1>
                 </Col>
             </Row>
         )
@@ -264,6 +266,27 @@ class Main extends React.Component {
                 {this.currentTask()}
                 <Row>
                     <Col>
+                        <Switch
+                            show={this.state.mode}
+                            showNotifications={(isRemider) =>
+                                this.showNotifications(isRemider)
+                            }
+                            debugMode={this.props.debugMode}
+                        />
+                        <ReactNotifications
+                            onRef={(ref) => (ReactNotifications.n = ref)}
+                            title={this.state.notificationsState.title} // Required
+                            body={this.state.notificationsState.body}
+                            icon="icon.png"
+                            timeout="5000"
+                            onClick={(event) =>
+                                this.handleNotificationClick(event)
+                            }
+                        />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
                         <ToggleButtonGroup
                             className="flex-wrap"
                             type="radio"
@@ -291,27 +314,6 @@ class Main extends React.Component {
                             </ToggleButton>
                             {this.debugElement(this.props.debugMode)}
                         </ToggleButtonGroup>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                        <Switch
-                            show={this.state.mode}
-                            showNotifications={(isRemider) =>
-                                this.showNotifications(isRemider)
-                            }
-                            debugMode={this.props.debugMode}
-                        />
-                        <ReactNotifications
-                            onRef={(ref) => (ReactNotifications.n = ref)}
-                            title={this.state.notificationsState.title} // Required
-                            body={this.state.notificationsState.body}
-                            icon="icon.png"
-                            timeout="5000"
-                            onClick={(event) =>
-                                this.handleNotificationClick(event)
-                            }
-                        />
                     </Col>
                 </Row>
                 <Row>
