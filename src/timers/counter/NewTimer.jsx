@@ -9,11 +9,14 @@ export const NewTimer = ({
     showNotifications,
     reminderSeconds = 300,
     debug = false,
+    autoCount = () => {},
 }) => {
     const reminderSound =
         'https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg'
     const regularSound =
         'https://actions.google.com/sounds/v1/emergency/beeper_emergency_call.ogg'
+
+    const emptyHook = () => {}
 
     const calculateTime = (secondsOffset) => {
         const time = new Date()
@@ -23,18 +26,21 @@ export const NewTimer = ({
 
     const { seconds, minutes, start, pause, restart, isRunning } = useTimer({
         expiryTimestamp: calculateTime(timerSeconds),
-        onExpire: () => timeUpHook(reminderTimer, regularSound, false),
+        onExpire: () =>
+            timeUpHook(reminderTimer, regularSound, false, autoCount),
     })
 
     const reminderTimer = useTimer({
         expiryTimestamp: calculateTime(reminderSeconds),
-        onExpire: () => timeUpHook(reminderTimer2, reminderSound, true),
+        onExpire: () =>
+            timeUpHook(reminderTimer2, reminderSound, true, emptyHook),
         autoStart: false,
     })
 
     const reminderTimer2 = useTimer({
         expiryTimestamp: calculateTime(reminderSeconds),
-        onExpire: () => timeUpHook(reminderTimer, reminderSound, true),
+        onExpire: () =>
+            timeUpHook(reminderTimer, reminderSound, true, emptyHook),
         autoStart: false,
     })
 
@@ -47,9 +53,9 @@ export const NewTimer = ({
     const isPaused = () => {
         return !isRunning
     }
-
-    const timeUpHook = (timer, soundFile, isReminder) => {
+    const timeUpHook = (timer, soundFile, isReminder, autoCountHook) => {
         timer.restart(calculateTime(reminderSeconds))
+        autoCountHook()
         const sound = new Audio(soundFile)
         sound.play()
         showNotifications(isReminder)

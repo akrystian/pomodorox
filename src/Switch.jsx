@@ -6,7 +6,7 @@ import Regular from './timers/Regular'
 import ShortBreak from './timers/ShortBreak'
 import TestBreak from './timers/TestBreak'
 
-export const Switch = ({ show, showNotifications, debugMode }) => {
+export const Switch = ({ show, showNotifications, debugMode, autoCount }) => {
     const selectedElement = (componentName) => {
         if (componentName === LONG_BREAK) {
             return (
@@ -27,6 +27,7 @@ export const Switch = ({ show, showNotifications, debugMode }) => {
                 <Regular
                     showNotifications={showNotifications}
                     debugMode={debugMode}
+                    autoCount={autoCount}
                 />
             )
         } else if (componentName === TEST_BREAK) {
@@ -34,6 +35,7 @@ export const Switch = ({ show, showNotifications, debugMode }) => {
                 <TestBreak
                     showNotifications={showNotifications}
                     debugMode={debugMode}
+                    autoCount={autoCount}
                 />
             )
         } else {

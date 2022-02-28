@@ -222,6 +222,12 @@ class Main extends React.Component {
         }
     }
 
+    currentTaskId = () => {
+        return this.state.labels.findIndex(
+            (it) => it.id === this.state.selected
+        )
+    }
+
     currentTask = () => {
         const current = this.state.labels
             .filter((it) => it.id === this.state.selected)
@@ -272,6 +278,10 @@ class Main extends React.Component {
                                 this.showNotifications(isRemider)
                             }
                             debugMode={this.props.debugMode}
+                            autoCount={() => {
+                                const index = this.currentTaskId()
+                                this.plusPoints(index)
+                            }}
                         />
                         <ReactNotifications
                             onRef={(ref) => (ReactNotifications.n = ref)}
