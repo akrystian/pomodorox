@@ -7,8 +7,8 @@ export const Event = ({ event }) => {
         <Fragment>
             <Row>
                 <Col>{event.timestamp.toString()}</Col>
-                <Col>{event.task}</Col>
-                <Col>{event.status}</Col>
+                <Col>{event.task.toString()}</Col>
+                <Col>{event.status.toString()}</Col>
             </Row>
         </Fragment>
     )

@@ -15,6 +15,7 @@ import ReactNotifications from 'react-browser-notifications'
 import { v4 as uuidv4 } from 'uuid'
 import Event from './Event'
 import EventStatus from './EventStatus'
+import EventType from './EventType'
 
 class Main extends React.Component {
     state = {
@@ -31,11 +32,12 @@ class Main extends React.Component {
         version: VERSION,
     }
 
-    handleEvent = (task, status) => {
+    handleEvent = (label, task, status) => {
         this.saveEvents({
             timestamp: new Date(),
+            label: label,
             task: task,
-            status: status.name,
+            status: status,
         })
     }
 
@@ -44,8 +46,8 @@ class Main extends React.Component {
             events: previousState.events.concat([
                 {
                     timestamp: event.timestamp,
-                    task: event.task,
-                    status: event.status,
+                    task: event.task.toString(),
+                    status: event.status.toString(),
                 },
             ]),
         }))
@@ -83,8 +85,9 @@ class Main extends React.Component {
         })
 
     handleChangeMode = (mode) => {
-        this.setState({ mode: mode })
+        this.setState({ mode: JSON.stringify(mode) })
         localStorage.setItem('state', JSON.stringify(this.state))
+        this.start('label', mode)
     }
 
     handleChangeLabel = (label) => {
@@ -96,8 +99,16 @@ class Main extends React.Component {
     }
 
     addTask = (label) => {
+        this.createEvent(label)
+    }
+
+    start = (label, eventType) => {
+        console.log("create start " + label)
+        this.handleEvent(label, eventType, EventStatus.STARTED)
+    }
+
+    createEvent = (label) => {
         if (label != null && label !== '') {
-            this.handleEvent('addTask', EventStatus.POINT)
             this.setState((prevState) => ({
                 labels: prevState.labels.concat([
                     { id: this.genId(), label: label, done: false, points: 0 },
@@ -298,19 +309,19 @@ class Main extends React.Component {
                             onChange={this.handleChangeMode}
                         >
                             <ToggleButton
-                                value={REGULAR}
+                                value={EventType.REGULAR}
                                 disabled={this.state.selected === ''}
                             >
                                 Regular
                             </ToggleButton>
                             <ToggleButton
-                                value={SHORT_BREAK}
+                                value={EventType.SHORT_BREAK}
                                 disabled={this.state.selected === ''}
                             >
                                 Short break
                             </ToggleButton>
                             <ToggleButton
-                                value={LONG_BREAK}
+                                value={EventType.LONG_BREAK}
                                 disabled={this.state.selected === ''}
                             >
                                 Long break
@@ -327,6 +338,7 @@ class Main extends React.Component {
                                 this.showNotifications(isRemider)
                             }
                             debugMode={this.props.debugMode}
+                            startHook={this.start}
                         />
                         <ReactNotifications
                             onRef={(ref) => (ReactNotifications.n = ref)}
