@@ -6,7 +6,7 @@ function Regular({ showNotifications, debugMode, autoCount }) {
         <NewTimer
             timerSeconds={25 * 60}
             showNotifications={showNotifications}
-            reminderSeconds={5 * 60}
+            reminderSeconds={1 * 30}
             debug={debugMode}
             autoCount={autoCount}
         />
