@@ -6,7 +6,7 @@ function ShortBreak({ showNotifications, debugMode }) {
         <NewTimer
             timerSeconds={5 * 60}
             showNotifications={showNotifications}
-            reminderSeconds={2 * 60}
+            reminderSeconds={1 * 30}
             debug={debugMode}
         />
     )
