@@ -201,11 +201,10 @@ class Main extends React.Component {
             this.state.labels.length > index
         ) {
             var copy = [...this.state.labels]
-            if (copy[index].points > 0) {
-                copy[index].points = copy[index].points - 1
-                this.setState({ labels: copy })
-                localStorage.setItem('state', JSON.stringify(this.state))
-            }
+            copy[index].points = copy[index].points - 1
+            this.setState({ labels: copy })
+            localStorage.setItem('state', JSON.stringify(this.state))
+
         }
     }
 
