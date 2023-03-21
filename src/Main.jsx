@@ -350,7 +350,7 @@ class Main extends React.Component {
                     <Col>{tasks}</Col>
                 </Row>
                 <Row>
-                    <Col >
+                    <Col>
                         <InputGroup className="mb-3">
                             <FormControl
                                 value={this.state.label}
