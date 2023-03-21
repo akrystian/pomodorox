@@ -4,10 +4,17 @@ import {
     Col,
     ToggleButton,
     ToggleButtonGroup,
+    ButtonGroup,
     Button,
     FormControl,
     InputGroup,
+    Badge
 } from 'react-bootstrap'
+import {
+    FaMinusCircle,
+    FaPlusCircle,
+} from 'react-icons/fa'
+
 import { LONG_BREAK, REGULAR, SHORT_BREAK, TEST_BREAK, VERSION } from './Const'
 import Aim from './Aim'
 import { Switch } from './Switch'
@@ -20,6 +27,7 @@ class Main extends React.Component {
         mode: [],
         numTask: 1,
         label: '',
+        estimate: 0,
         selected: null,
         notificationsState: {
             title: 'Yep!',
@@ -68,15 +76,19 @@ class Main extends React.Component {
         this.setState({ label: label })
     }
 
+    handleChangeEstimate = (delta) => {
+        this.setState((prevState) => ({ estimate: (prevState.estimate + delta) }))
+    }
+
     genId = () => {
         return uuidv4()
     }
 
-    addTask = (label) => {
+    addTask = (label, estimate) => {
         if (label != null && label !== '') {
             this.setState((prevState) => ({
                 labels: prevState.labels.concat([
-                    { id: this.genId(), label: label, done: false, points: 0 },
+                    { id: this.genId(), label: label, done: false, points: 0, estimate: estimate },
                 ]),
                 label: '',
             }))
@@ -165,6 +177,13 @@ class Main extends React.Component {
             this.setState({ labels: copy })
             localStorage.setItem('state', JSON.stringify(this.state))
         }
+    }
+
+    estimatedSum = () => {
+        const sum = this.state.labels.map(it => it.estimate).reduce((accumulator, current) => {
+            return accumulator + current;
+        }, 0);
+        return sum;
     }
 
     select = (index) => {
@@ -258,6 +277,8 @@ class Main extends React.Component {
                 deleteHook={this.removeTask}
                 plusPointHook={this.plusPoints}
                 minusPointHook={this.minusPoints}
+                plusEstimateHook={this.plusEstimate}
+                minusEstimateHook={this.minusEstimate}
                 upHook={this.moveUpTask}
                 downHook={this.moveDownTask}
                 toggleDone={this.toggleDone}
@@ -340,16 +361,44 @@ class Main extends React.Component {
                                 }
                                 onKeyPress={this.handleEnterKeyPress}
                             />
+                            {' '}
+                            <Badge pill variant="secondary">
+                                {this.state.estimate}
+                            </Badge>
+                            {' '}
+                            <ButtonGroup vertical={true}>
+                                <Button
+                                    variant="secondary"
+                                    onClick={() => this.handleChangeEstimate(1)}
+                                    size="sm"
+
+                                >
+                                    <FaPlusCircle />
+                                </Button>
+                                <Button
+                                    variant="secondary"
+                                    onClick={() => this.handleChangeEstimate(-1)}
+                                    size="sm"
+                                >
+                                    <FaMinusCircle />
+                                </Button>
+                            </ButtonGroup>
+                            {' '}
                             <InputGroup.Append>
                                 <Button
                                     onClick={() =>
-                                        this.addTask(this.state.label)
+                                        this.addTask(this.state.label, this.state.estimate)
                                     }
                                 >
                                     +
                                 </Button>
                             </InputGroup.Append>
                         </InputGroup>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <em>Estimated points sum: {this.estimatedSum()} (Aprox hours: {this.estimatedSum() / 2})</em>
                     </Col>
                 </Row>
             </div>
