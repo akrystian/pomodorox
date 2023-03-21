@@ -73,7 +73,7 @@ export const Aim = ({
                             </Button>
                         </ButtonGroup>{' '}
                         <Badge pill variant="secondary">
-                            {label.points}
+                            <strong>{label.estimate}</strong> / {label.points}
                         </Badge>{' '}
                         <strong>{label.label}</strong>
                     </div>
