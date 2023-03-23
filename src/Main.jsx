@@ -84,11 +84,11 @@ class Main extends React.Component {
         return uuidv4()
     }
 
-    addTask = (label, estimate) => {
+    addTask = (label) => {
         if (label != null && label !== '') {
             this.setState((prevState) => ({
                 labels: prevState.labels.concat([
-                    { id: this.genId(), label: label, done: false, points: 0, estimate: estimate },
+                    { id: this.genId(), label: label, done: false, points: 0, estimate: prevState.estimate },
                 ]),
                 label: '',
             }))
