@@ -98,10 +98,11 @@ class Main extends React.Component {
             notificationsState: { title: newTitle, body: newBody },
         })
 
-    handleChangeMode = (mode) => {
+    handleChangeMode = (mode, label) => {
+        console.log('mode: ' + mode + ' label: ' + label)
+        this.start(label, mode)
         this.setState({ mode: mode })
         localStorage.setItem('state', JSON.stringify(this.state))
-        this.start('label', mode)
     }
 
     handleChangeLabel = (label) => {
@@ -121,8 +122,11 @@ class Main extends React.Component {
     }
 
     start = (label, eventType) => {
-        console.log("create start " + label)
         this.handleEvent(label, eventType, EventStatus.STARTED)
+    }
+
+    end = (label, eventType) => {
+        this.handleEvent(label, eventType, EventStatus.ENDED)
     }
 
     createEvent = (label) => {
@@ -235,6 +239,7 @@ class Main extends React.Component {
         ) {
             var selected = this.state.labels[index]
             if (!selected.done) {
+                this.start(selected.label, this.state.mode)
                 this.setState({ selected: selected.id })
                 localStorage.setItem('state', JSON.stringify(this.state))
             }
@@ -345,7 +350,7 @@ class Main extends React.Component {
                                 const index = this.currentTaskId()
                                 this.plusPoints(index)
                             }}
-                            startHook={(eventType) => this.start(this.state.label, eventType)}
+                            
                         />
                         <ReactNotifications
                             onRef={(ref) => (ReactNotifications.n = ref)}
@@ -366,7 +371,9 @@ class Main extends React.Component {
                             type="radio"
                             name="options"
                             value={this.state.mode}
-                            onChange={this.handleChangeMode}
+                            onChange={(e) => 
+                                this.handleChangeMode(e, this.state.label)
+                            }
                         >
                             <ToggleButton
                                 value={REGULAR}
@@ -443,6 +450,17 @@ class Main extends React.Component {
                 <Row>
                     <Col>
                         <em>Estimated points sum: {this.estimatedSum()} (Aprox hours: {this.estimatedSum() / 2})</em>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Button
+                            onClick={() => {
+                                this.clearEvents()
+                            }}
+                        >
+                            Clear events
+                        </Button>
                     </Col>
                 </Row>
                 {eventTasks}

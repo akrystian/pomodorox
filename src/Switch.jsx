@@ -7,10 +7,9 @@ import Regular from './timers/Regular'
 import ShortBreak from './timers/ShortBreak'
 import TestBreak from './timers/TestBreak'
 
-export const Switch = ({ show, showNotifications, debugMode, autoCount, startHook }) => {
+export const Switch = ({ show, showNotifications, debugMode, autoCount }) => {
     const selectedElement = (componentName) => {
         if (componentName === LONG_BREAK) {
-            startHook(EventType.LONG_BREAK);
             return (
                 <LongBreak
                     showNotifications={showNotifications}
@@ -18,7 +17,6 @@ export const Switch = ({ show, showNotifications, debugMode, autoCount, startHoo
                 />
             )
         } else if (componentName === SHORT_BREAK) {
-            startHook(EventType.SHORT_BREAK)
             return (
                 <ShortBreak
                     showNotifications={showNotifications}
@@ -26,7 +24,6 @@ export const Switch = ({ show, showNotifications, debugMode, autoCount, startHoo
                 />
             )
         } else if (componentName === REGULAR) {
-            startHook(EventType.REGULAR)
             return (
                 <Regular
                     showNotifications={showNotifications}
@@ -35,7 +32,6 @@ export const Switch = ({ show, showNotifications, debugMode, autoCount, startHoo
                 />
             )
         } else if (componentName === TEST_BREAK) {
-            startHook(EventType.TEST_BREAK)
             return (
                 <TestBreak
                     showNotifications={showNotifications}
