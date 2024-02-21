@@ -1,6 +1,5 @@
 import React from 'react'
 import { LONG_BREAK, REGULAR, SHORT_BREAK, TEST_BREAK } from './Const'
-import EventType from './EventType'
 import Blank from './timers/Blank'
 import LongBreak from './timers/LongBreak'
 import Regular from './timers/Regular'
