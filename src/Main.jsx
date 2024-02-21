@@ -54,10 +54,17 @@ class Main extends React.Component {
             events: previousState.events.concat([
                 {
                     timestamp: event.timestamp,
+                    label: event.label.toString(),
                     task: event.task.toString(),
                     status: event.status.toString(),
                 },
             ]),
+        }))
+    }
+
+    clearEvents = () => {
+        this.setState(() => ({
+            events: []
         }))
     }
 
@@ -339,6 +346,7 @@ class Main extends React.Component {
                                 const index = this.currentTaskId()
                                 this.plusPoints(index)
                             }}
+                            startHook={(eventType) => this.start(this.state.label, eventType)}
                         />
                         <ReactNotifications
                             onRef={(ref) => (ReactNotifications.n = ref)}

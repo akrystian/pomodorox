@@ -7,6 +7,7 @@ export const Event = ({ event }) => {
         <Fragment>
             <Row>
                 <Col>{event.timestamp.toString()}</Col>
+                <Col>{event.label ? event.label.toString() : 'No label'}</Col> 
                 <Col>{event.task.toString()}</Col>
                 <Col>{event.status.toString()}</Col>
             </Row>
