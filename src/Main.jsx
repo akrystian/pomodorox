@@ -22,7 +22,6 @@ import ReactNotifications from 'react-browser-notifications'
 import { v4 as uuidv4 } from 'uuid'
 import Event from './Event'
 import EventStatus from './EventStatus'
-import EventType from './EventType'
 
 class Main extends React.Component {
     state = {
@@ -100,7 +99,7 @@ class Main extends React.Component {
         })
 
     handleChangeMode = (mode) => {
-        this.setState({ mode: JSON.stringify(mode) })
+        this.setState({ mode: mode })
         localStorage.setItem('state', JSON.stringify(this.state))
         this.start('label', mode)
     }
@@ -370,19 +369,19 @@ class Main extends React.Component {
                             onChange={this.handleChangeMode}
                         >
                             <ToggleButton
-                                value={EventType.REGULAR}
+                                value={REGULAR}
                                 disabled={this.state.selected === ''}
                             >
                                 Regular
                             </ToggleButton>
                             <ToggleButton
-                                value={EventType.SHORT_BREAK}
+                                value={SHORT_BREAK}
                                 disabled={this.state.selected === ''}
                             >
                                 Short break
                             </ToggleButton>
                             <ToggleButton
-                                value={EventType.LONG_BREAK}
+                                value={LONG_BREAK}
                                 disabled={this.state.selected === ''}
                             >
                                 Long break
