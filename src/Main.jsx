@@ -378,7 +378,7 @@ class Main extends React.Component {
                         >
                             <ToggleButton
                                 value={REGULAR}
-                                disabled={this.state.selected === ''}
+                                disabled={this.state.selected === '' || this.state.selected === null}
                             >
                                 Regular
                             </ToggleButton>
