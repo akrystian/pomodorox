@@ -1,6 +1,5 @@
 import React from 'react'
 import { Fragment } from 'react'
-import { Row, Col, Table } from 'react-bootstrap'
 
 export const Event = ({ event }) => {
     return (
