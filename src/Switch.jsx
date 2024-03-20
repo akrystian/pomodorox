@@ -43,6 +43,8 @@ export const Switch = ({ show, showNotifications, debugMode, autoCount }) => {
         }
     }
 
+    
+
     return selectedElement(show)
 }
 

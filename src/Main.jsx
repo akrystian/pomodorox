@@ -8,7 +8,8 @@ import {
     Button,
     FormControl,
     InputGroup,
-    Badge
+    Badge,
+    Table
 } from 'react-bootstrap'
 import {
     FaMinusCircle,
@@ -20,6 +21,8 @@ import Aim from './Aim'
 import { Switch } from './Switch'
 import ReactNotifications from 'react-browser-notifications'
 import { v4 as uuidv4 } from 'uuid'
+import Event from './Event'
+import EventStatus from './EventStatus'
 
 class Main extends React.Component {
     state = {
@@ -33,7 +36,36 @@ class Main extends React.Component {
             title: 'Yep!',
             body: 'Time is up!',
         },
+        events: [],
         version: VERSION,
+    }
+
+    handleEvent = (label, task, status) => {
+        this.saveEvents({
+            timestamp: new Date(),
+            label: label,
+            task: task,
+            status: status,
+        })
+    }
+
+    saveEvents = (event) => {
+        this.setState((previousState) => ({
+            events: previousState.events.concat([
+                {
+                    timestamp: event.timestamp,
+                    label: event.label.toString(),
+                    task: event.task.toString(),
+                    status: event.status.toString(),
+                },
+            ]),
+        }))
+    }
+
+    clearEvents = () => {
+        this.setState(() => ({
+            events: []
+        }))
     }
 
     componentDidMount() {
@@ -67,7 +99,9 @@ class Main extends React.Component {
             notificationsState: { title: newTitle, body: newBody },
         })
 
-    handleChangeMode = (mode) => {
+    handleChangeMode = (mode, label) => {
+        console.log('mode: ' + mode + ' label: ' + label)
+        this.start(label, mode)
         this.setState({ mode: mode })
         localStorage.setItem('state', JSON.stringify(this.state))
     }
@@ -85,6 +119,18 @@ class Main extends React.Component {
     }
 
     addTask = (label) => {
+        this.createEvent(label)
+    }
+
+    start = (label, eventType) => {
+        this.handleEvent(label, eventType, EventStatus.STARTED)
+    }
+
+    end = (label, eventType) => {
+        this.handleEvent(label, eventType, EventStatus.ENDED)
+    }
+
+    createEvent = (label) => {
         if (label != null && label !== '') {
             this.setState((prevState) => ({
                 labels: prevState.labels.concat([
@@ -194,6 +240,7 @@ class Main extends React.Component {
         ) {
             var selected = this.state.labels[index]
             if (!selected.done) {
+                this.start(selected.label, this.state.mode)
                 this.setState({ selected: selected.id })
                 localStorage.setItem('state', JSON.stringify(this.state))
             }
@@ -287,6 +334,8 @@ class Main extends React.Component {
             />
         ))
 
+        const eventTasks = this.state.events.map((it) => <Event event={it} />)
+
         return (
             <div className="m-2">
                 {this.currentTask()}
@@ -302,6 +351,7 @@ class Main extends React.Component {
                                 const index = this.currentTaskId()
                                 this.plusPoints(index)
                             }}
+
                         />
                         <ReactNotifications
                             onRef={(ref) => (ReactNotifications.n = ref)}
@@ -322,7 +372,9 @@ class Main extends React.Component {
                             type="radio"
                             name="options"
                             value={this.state.mode}
-                            onChange={this.handleChangeMode}
+                            onChange={(e) =>
+                                this.handleChangeMode(e, this.state.label)
+                            }
                         >
                             <ToggleButton
                                 value={REGULAR}
@@ -401,6 +453,30 @@ class Main extends React.Component {
                         <em>Estimated points sum: {this.estimatedSum()} (Aprox hours: {this.estimatedSum() / 2})</em>
                     </Col>
                 </Row>
+                <Row>
+                    <Col>
+                        <Button
+                            onClick={() => {
+                                this.clearEvents()
+                            }}
+                        >
+                            Clear events
+                        </Button>
+                    </Col>
+                </Row>
+                <Table size="sm">
+                    <thead className='thead-dark'>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Label</th>
+                            <th>Task</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {eventTasks}
+                    </tbody>
+                </Table>
             </div>
         )
     }
