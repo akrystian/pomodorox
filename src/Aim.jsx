@@ -96,6 +96,7 @@ export const Aim = ({
                         </ButtonGroup>{' '}
                         <Button
                             variant="danger"
+                            disabled={selected}
                             onClick={() => deleteHook(index)}
                             size="sm"
                         >
