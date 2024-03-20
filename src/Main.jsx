@@ -8,7 +8,8 @@ import {
     Button,
     FormControl,
     InputGroup,
-    Badge
+    Badge,
+    Table
 } from 'react-bootstrap'
 import {
     FaMinusCircle,
@@ -350,7 +351,7 @@ class Main extends React.Component {
                                 const index = this.currentTaskId()
                                 this.plusPoints(index)
                             }}
-                            
+
                         />
                         <ReactNotifications
                             onRef={(ref) => (ReactNotifications.n = ref)}
@@ -371,7 +372,7 @@ class Main extends React.Component {
                             type="radio"
                             name="options"
                             value={this.state.mode}
-                            onChange={(e) => 
+                            onChange={(e) =>
                                 this.handleChangeMode(e, this.state.label)
                             }
                         >
@@ -463,7 +464,19 @@ class Main extends React.Component {
                         </Button>
                     </Col>
                 </Row>
-                {eventTasks}
+                <Table size="sm">
+                    <thead className='thead-dark'>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Label</th>
+                            <th>Task</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {eventTasks}
+                    </tbody>
+                </Table>
             </div>
         )
     }
