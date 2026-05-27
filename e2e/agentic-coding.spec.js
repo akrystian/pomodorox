@@ -1,9 +1,8 @@
 const { test, expect } = require('@playwright/test')
 
 test('adds a task', async ({ page }) => {
+    await page.addInitScript(() => localStorage.clear())
     await page.goto('/')
-    await page.evaluate(() => localStorage.clear())
-    await page.reload()
 
     const taskName = 'Agentic coding task'
 
