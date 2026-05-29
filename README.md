@@ -1,35 +1,89 @@
+# PomidoroX [![CI for pomidorox by @akrystian](https://github.com/akrystian/pomidorox/actions/workflows/ci.yaml/badge.svg)](https://github.com/akrystian/pomidorox/actions/workflows/ci.yaml)
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `yarn start`
+### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the app in development mode at [http://localhost:3000](http://localhost:3000).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### `npm test`
 
-### `yarn test`
+Runs unit tests in watch mode.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `npm run build`
 
-### `yarn build`
+Builds the app for production into `build/`.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `npm run test:e2e`
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Runs Playwright smoke and regression suites.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `npm run test:e2e:smoke`
 
-## Third party
+Runs only smoke Playwright tests in `e2e/tests/smoke`.
 
-Used assets:
+### `npm run test:e2e:regression`
 
-- countdown-sound.mp3: [original] https://www.freesoundslibrary.com/countdown-sound/; Published by
-  Spanac/freesoundslibrary.com under [CC BY 4.0 License](https://creativecommons.org/licenses/by/4.0/)
+Runs only regression Playwright tests in `e2e/tests/regression`.
+
+### `npm run test:e2e:ui`
+
+Opens Playwright UI mode.
+
+### `npm run test:all`
+
+Runs unit tests and Playwright smoke/regression suites.
+
+## E2E setup
+
+1. Install dependencies:
+
+   ```bash
+   npm ci
+   ```
+
+2. Install Playwright browsers:
+
+   ```bash
+   npx playwright install --with-deps
+   ```
+
+3. Build the application:
+
+   ```bash
+   npm run build
+   ```
+
+4. Run E2E tests:
+
+   ```bash
+   npm run test:e2e
+   ```
+
+Playwright configuration is in `/tmp/workspace/akrystian/pomodorox/playwright.config.ts`.
+
+## CI and required checks
+
+The CI workflow runs three jobs in parallel:
+
+- `build_test`
+- `smoke`
+- `regression`
+
+Recommended branch protection required status checks:
+
+- `build_test`
+- `smoke`
+- `regression`
+
+Nightly browser-matrix E2E runs are in `.github/workflows/nightly.yml` against `https://akrystian.github.io/pomodorox`.
+
+## Deploy website to gh-pages
+
+### `npm run deploy`
+
+Deploys by `gh-pages` package.

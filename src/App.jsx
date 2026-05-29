@@ -7,7 +7,7 @@ import Main from './Main'
 
 class App extends React.Component {
     state = {
-        debugMode: false,
+        debugMode: new URLSearchParams(window.location.search).get('debug') === 'true',
     }
 
     setDebugMode = (on) => {
