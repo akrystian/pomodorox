@@ -1,4 +1,4 @@
-name: CI for pomidorox by @akrystian
+name: CI
 
 on:
   push:
