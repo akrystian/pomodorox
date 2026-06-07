@@ -1,0 +1,27 @@
+name: Nightly E2E
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  e2e-nightly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - run: npx playwright test e2e/tests/smoke e2e/tests/regression
+        env:
+          BASE_URL: https://akrystian.github.io/pomodorox
+          FULL_BROWSER_MATRIX: true
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: nightly-report-${{ github.run_id }}
+          path: playwright-report/
+          retention-days: 30

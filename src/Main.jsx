@@ -281,7 +281,7 @@ class Main extends React.Component {
                     value={TEST_BREAK}
                     disabled={this.state.selected === ''}
                 >
-                    Test break
+                    TEST_BREAK
                 </ToggleButton>
             )
         }
